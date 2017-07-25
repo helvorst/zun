@@ -14,15 +14,17 @@ export class PlayerComponent implements OnInit {
 
     this.ytSrv.getVideo()
     .subscribe(video => this.play(video));
-
-    this.player = new YT.Player('ytplayer', {
-      height: '360',
-      width: '640',
-      videoId: 'cKcERaGlg-o'
-    });
+    setTimeout(() =>  {this.player = new YT.Player('ytplayer', {
+          height: '360',
+          width: '640',
+          videoId: 'cKcERaGlg-o'
+        });
+      }, 1500 )
+      
   }
 
   play(video) {
+    
     this.player.loadVideoById({
                'videoId': video.contentDetails.videoId,
                'suggestedQuality': 'large'});

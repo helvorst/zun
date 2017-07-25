@@ -9,11 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlaylistComponent implements OnInit {
 
-  public playlist: Observable<any>;
+  public playlist =[];
   constructor(private ytSrv: YoutubeService) { }
 
   ngOnInit() {
-    this.playlist = this.ytSrv.getPlaylistItems();
+     this.ytSrv.getPlaylistItems()
+    .subscribe(res => {
+      console.log(res)
+      this.playlist.push(res)
+    })
+    
+    
    
   }
 
