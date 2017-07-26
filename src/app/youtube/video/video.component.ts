@@ -1,4 +1,5 @@
-import { YoutubeService } from '../../service/youtube.service';
+import { PlayerService } from '../../service/player/player.service';
+import { YoutubeService } from '../../service/youtube/youtube.service';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -9,13 +10,13 @@ import { Component, Input, OnInit } from '@angular/core';
 export class VideoComponent implements OnInit {
 
   @Input() video: any;
-  constructor(private ytSrv: YoutubeService) { }
+  constructor(private playerSrv: PlayerService) { }
 
   ngOnInit() {
   }
 
   play(): void {
-    this.ytSrv.setVideo(this.video);
+    this.playerSrv.play(this.video);
   }
 
 }

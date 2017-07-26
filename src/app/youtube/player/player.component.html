@@ -1,8 +1,10 @@
 <div class="player">
- <!--<iframe src="https://www.youtube.com/embed?listType=playlist&list=PLLsmbWsQuHtRjX_JQwBuSWaF3Qie7Au7u" 
- type="text/html" width="640" height="360"></iframe>
-<iframe id="ytplayer" type="text/html" width="640" height="360"
-  src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"
-  frameborder="0"></iframe>-->
-<div id="ytplayer"></div>
+    <div id="ytplayer"></div>
+    <div class="player-controls">
+        <button md-fab (click)="switchTo(-1)"><md-icon>skip_previous</md-icon></button>
+        <button md-fab (click)="playStop()"><md-icon>{{playerSrv.playerState.isStopped ? 'play_arrow' : 'stop'}}</md-icon></button>
+        <button md-fab (click)="switchTo(+1)"><md-icon>skip_next</md-icon></button>
+        <button md-fab (click)="setLoop()" [ngClass]="{'active': playerSrv.playerState.isLooped}"><md-icon>repeat_one</md-icon></button>
+        <button md-fab (click)="setShuffle()" [ngClass]="{'active': playerSrv.playerState.isShuffled}"><md-icon>shuffle</md-icon></button>
+    </div>
 </div>

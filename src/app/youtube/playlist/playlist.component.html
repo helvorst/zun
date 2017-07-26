@@ -1,5 +1,3 @@
-<div *ngIf="playlist.length">
-  <div class="playlist" *ngFor="let video of playlist ">
-    <app-video  [video]="video"></app-video>
-  </div>
+<div class="playlist" *ngFor="let video of playerSrv.currentPlaylistItems">
+   <app-video [video]="video"></app-video>
 </div>

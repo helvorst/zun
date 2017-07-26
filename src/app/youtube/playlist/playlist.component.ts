@@ -1,5 +1,6 @@
+import { PlayerService } from '../../service/player/player.service';
 import { Observable } from 'rxjs/Rx';
-import { YoutubeService } from '../../service/youtube.service';
+import { YoutubeService } from '../../service/youtube/youtube.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,18 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlaylistComponent implements OnInit {
 
-  public playlist =[];
-  constructor(private ytSrv: YoutubeService) { }
+  public playlist;
+  constructor(private playerSrv: PlayerService) { }
 
   ngOnInit() {
-     this.ytSrv.getPlaylistItems()
-    .subscribe(res => {
-      console.log(res)
-      this.playlist.push(res)
-    })
-    
-    
-   
+     //this.playlist = this.ytSrv.getPlaylistItems();    
   }
 
 }
