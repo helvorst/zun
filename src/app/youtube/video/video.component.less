@@ -6,11 +6,26 @@
     cursor: pointer;
     &-thumbnail {
         //border-right: 1px solid blue;
-        margin-right: 10px;
+        // margin-right: 10px;
+        // border-radius: 50%;
+        // height: 100px;
+        // width: 100px;
     }
     &-description {
         display: flex;
         align-self: center;
+        padding: 0 15px;
+    }
+    &-status {
+        width: 35px;
+        display: flex;
+        // flex-direction: row;
+        align-self: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+     &-status.active {
+        background-color: darkblue;
     }
 }
 .video:hover {

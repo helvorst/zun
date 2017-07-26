@@ -1,17 +1,24 @@
 import { YoutubeService } from '../youtube/youtube.service';
 import { Subject } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
+import { Observable } from "rxjs/Observable";
+declare var YT;
 
 @Injectable()
 export class PlayerService {
   public currentPlaylistItems = [];
   public currentVideo;
+  public currentVideoIndex;
   public currentVideoObservable = new Subject();
+  private history = [];
   public playerState = {
     isStopped: false,
     isLooped: false,
-    isShuffled: false
+    isShuffled: true
   };
+
+  //TODO get rid of
+  public videoEnded = this.switchTo;
 
   constructor(private ytSrv: YoutubeService) {
     ytSrv.getPlaylistItems()
@@ -19,37 +26,95 @@ export class PlayerService {
         this.currentPlaylistItems = playlistItems;
         if (!this.currentVideo) {
           var random = this.getShuffledIndex();
-          this.play(this.currentPlaylistItems[random]);
+          this.currentVideo = this.currentPlaylistItems[random];
         }
       });
   }
 
-  getCurrentVideoIndex(): number {
-    return this.currentPlaylistItems.findIndex(video => video == this.currentVideo);
+  getPlayer(element: any): Observable<any> {
+    let playerObservable = new Subject();
+    this.initPlayer(playerObservable, element);
+    return playerObservable;
+  }
+
+  waitForPlayerReady(playerObservable: Subject<any>, player: any): void {
+    if(player.B){
+      playerObservable.next(player);
+    } else {
+      setTimeout(()=> this.waitForPlayerReady(playerObservable, player), 100);
+    }
+  }
+  
+  initPlayer(playerObservable: Subject<any>, element: any): any {
+    if (YT && YT.loaded == 1 && this.currentVideo) {
+      const player = new YT.Player(element, {
+        height: '350',
+        width: '600',
+        suggestedQuality: 'large',
+        fs: 0,
+        modestbranding: 1,
+        playsinline: 1,
+        controls: 0,
+        enablejsapi: 1,
+        events: {
+          onError: this.onPlayerError,
+          onStateChange: this.onPlayerStateChanged
+        }
+      }) 
+      this.waitForPlayerReady(playerObservable, player);
+    } else {
+      setTimeout(() => this.initPlayer(playerObservable, element), 100);
+    }
+  }
+
+  onPlayerError(er): void {
+    console.log(er)
+  }
+
+  onPlayerStateChanged = (state) => {
+    //video ended
+    if (state.data === 0) {
+      this.videoEnded(1);
+    }
+  }
+
+  getVideoIndex(targetVideo): number {
+    return this.currentPlaylistItems.findIndex(video => video == targetVideo);
   }
 
   getShuffledIndex(): number {
     const size = this.currentPlaylistItems.length;
-    const random = Math.ceil(Math.random()*size);
+    const random = Math.ceil(Math.random() * size);
     return random;
   }
 
   play(video): void {
     this.currentVideo = video;
+    this.currentVideoIndex = this.getVideoIndex(this.currentVideo);
     this.currentVideoObservable.next(this.currentVideo);
   }
 
   switchTo(step?: number): void {
-    let currentIndex = this.getCurrentVideoIndex();
-    if (this.playerState.isLooped) {
-      this.play(this.currentVideo);
-    } else if (this.playerState.isShuffled) {
-      const shuffledIndex = this.getShuffledIndex();
-      this.play(this.currentPlaylistItems[shuffledIndex]);
+    let targetVideo = this.currentVideo;
+    if (this.playerState.isShuffled) {
+      let shuffledIndex;
+      if (step == 1) {
+        shuffledIndex = this.getShuffledIndex();
+      } else if (step == -1) {
+        this.history.pop();
+        shuffledIndex = this.history.pop();
+      }
+      targetVideo = this.currentPlaylistItems[shuffledIndex];
+      this.history.push(shuffledIndex);
     } else if (step != null) {
-      const targetIndex = currentIndex + step;
-      this.play(this.currentPlaylistItems[targetIndex]);
+      const currentIndex = this.getVideoIndex(this.currentVideo);
+      const nextIndex = currentIndex + step;
+      targetVideo = this.currentPlaylistItems[nextIndex];
+      if (step == 1) {
+        this.history.push(nextIndex)
+      }
     }
+    this.play(targetVideo);
   }
 
   setState(state): void {

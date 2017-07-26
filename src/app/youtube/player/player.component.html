@@ -1,10 +1,14 @@
 <div class="player">
-    <div id="ytplayer"></div>
+    <div class="player-title">
+       <span class="pulse"></span> {{video?.snippet.title}}
+    </div>
     <div class="player-controls">
         <button md-fab (click)="switchTo(-1)"><md-icon>skip_previous</md-icon></button>
         <button md-fab (click)="playStop()"><md-icon>{{playerSrv.playerState.isStopped ? 'play_arrow' : 'stop'}}</md-icon></button>
-        <button md-fab (click)="switchTo(+1)"><md-icon>skip_next</md-icon></button>
+        <button md-fab (click)="switchTo(1)"><md-icon>skip_next</md-icon></button>
         <button md-fab (click)="setLoop()" [ngClass]="{'active': playerSrv.playerState.isLooped}"><md-icon>repeat_one</md-icon></button>
         <button md-fab (click)="setShuffle()" [ngClass]="{'active': playerSrv.playerState.isShuffled}"><md-icon>shuffle</md-icon></button>
     </div>
+   
+    <div id="ytplayer" #ytplayer></div>   
 </div>

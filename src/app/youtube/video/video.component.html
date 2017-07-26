@@ -1,4 +1,5 @@
 <div class="video" (click)="play()">
+   <div class="video-status" [ngClass]="{'active': isActive()}">{{index + 1}}</div>
    <img class="video-thumbnail" src={{video.snippet.thumbnails?.default.url}}>
    <div class="video-description">{{video.snippet.title}}</div>
 </div>

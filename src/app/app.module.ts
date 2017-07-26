@@ -10,13 +10,15 @@ import 'rxjs/Rx';
 import { AppComponent } from './app.component';
 import { VideoComponent } from './youtube/video/video.component';
 import { PlayerComponent } from './youtube/player/player.component';
+import { HeaderComponent } from './common/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlaylistComponent,
     VideoComponent,
-    PlayerComponent
+    PlayerComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
