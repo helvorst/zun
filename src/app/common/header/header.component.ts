@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PlayerService } from "../../service/player/player.service";
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  private isPlaying: boolean;
+  constructor(private playerSrv: PlayerService) { }
 
   ngOnInit() {
+     this.playerSrv.currentVideoObservable
+     .subscribe(newvideo => { this.isPlaying = true;})
   }
 
 }

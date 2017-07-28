@@ -5,15 +5,24 @@ body {
     color: white;
     margin: 0;
 }
-
+.pulse-dot{
+  width: 15px;
+  height: 15px;
+  background-color: rgb(35, 34, 34);
+  position: relative;
+  top: 0px;
+  left: 45px;
+  border-radius: 50%;
+}
 .pulse {
   margin-right: 15px;
   display: block;
-  width: 35px;
-  height: 35px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background:darkblue;
+  background:white;
   cursor: pointer;
+  border: 7px solid rgb(35, 34, 34);
   box-shadow: 0 0 0 rgba(20,20,200, 0.4);
   animation: pulse 1s infinite;
 }

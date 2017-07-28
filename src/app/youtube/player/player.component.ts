@@ -21,7 +21,7 @@ export class PlayerComponent implements OnInit {
     this.playerSrv.getPlayer(this.htmlPlayerElement.nativeElement)
     .subscribe(player  => {
       this.player = player;
-      this.select(this.playerSrv.currentVideo);
+      this.playerSrv.play(this.playerSrv.currentVideo);
     })
 
     this.playerSrv.currentVideoObservable

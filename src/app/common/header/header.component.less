@@ -2,10 +2,39 @@
     display: flex;
     align-items: center;
     position: fixed;
+    top: -30px;
+    left: 277px;
+
     &-logo{
         height: 120px;
     }
     &-title {
         font-size: 198px;
+    }
+}
+
+.zun-logo{
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+
+    &__circle {
+        width: 85px;
+        height: 85px;
+        border: 8px solid rgb(35, 34, 34);
+        border-radius: 50%;
+        display: block;
+        background-color: white;
+        //animation: pulse 1s infinite;
+    }
+     &__dot {
+        width: 18px;
+        height: 18px;
+        background-color: rgb(35, 34, 34);
+        border-radius: 50%;
+        position: relative;
+        left: 42px;
+        top: 60px;
+        display: block;
     }
 }
