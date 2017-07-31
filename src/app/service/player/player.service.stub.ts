@@ -1,11 +1,12 @@
+
+import { StateAst } from '@angular/animations/browser/src/dsl/animation_ast';
+import { YoutubeServiceStub } from '../youtube/youtube.service.stub';
 import { YoutubeService } from '../youtube/youtube.service';
 import { Subject } from 'rxjs/Rx';
-import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
-declare var YT;
 
-@Injectable()
-export class PlayerService {
+
+export class PlayerServiceStub {
   public currentPlaylistItems = [];
   public currentVideo;
   public currentVideoIndex;
@@ -16,12 +17,12 @@ export class PlayerService {
     isLooped: false,
     isShuffled: true
   };
-
+ private ytSrv = new YoutubeServiceStub();
   //TODO get rid of
   public videoEnded = this.switchTo;
 
-  constructor(private ytSrv: YoutubeService) {
-    ytSrv.getPlaylistItems()
+  constructor() {
+    this.ytSrv.getPlaylistItems()
       .subscribe(playlistItems => {
         this.currentPlaylistItems = playlistItems;
         if (!this.currentVideo) {
@@ -32,40 +33,17 @@ export class PlayerService {
   }
 
   getPlayer(element: any): Observable<any> {
-    let playerObservable = new Subject();
-    this.initPlayer(playerObservable, element);
-    return playerObservable;
+    const player = {
+      loadVideoById: jasmine.createSpy('loadVideoById').and.returnValue(true),
+      state: {
+        data: 0
+      },
+      playVideo: jasmine.createSpy('playVideo').and.returnValue('playing'),
+      pauseVideo: jasmine.createSpy('pauseVideo').and.returnValue('stopped')
+    };
+    return Observable.of(player);
   }
 
-  waitForPlayerReady(playerObservable: Subject<any>, player: any): void {
-    if(player.B){
-      playerObservable.next(player);
-    } else {
-      setTimeout(()=> this.waitForPlayerReady(playerObservable, player), 100);
-    }
-  }
-  
-  initPlayer(playerObservable: Subject<any>, element: any): any {
-    if (YT && YT.loaded == 1 && this.currentVideo) {
-      const player = new YT.Player(element, {
-        height: '350',
-        width: '600',
-        suggestedQuality: 'large',
-        fs: 0,
-        modestbranding: 1,
-        playsinline: 1,
-        controls: 0,
-        enablejsapi: 1,
-        events: {
-          onError: this.onPlayerError,
-          onStateChange: this.onPlayerStateChanged
-        }
-      }) 
-      this.waitForPlayerReady(playerObservable, player);
-    } else {
-      setTimeout(() => this.initPlayer(playerObservable, element), 100);
-    }
-  }
 
   onPlayerError = (er) => {
     console.log(er)

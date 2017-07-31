@@ -12,6 +12,9 @@ import { VideoComponent } from './youtube/video/video.component';
 import { PlayerComponent } from './youtube/player/player.component';
 import { HeaderComponent } from './common/header/header.component';
 import { VisualisationComponent } from './visualisation/visualisation.component';
+//import 'jasmine';
+//  declare var jasmine
+//  jasmine  = require('jasmine');
 
 @NgModule({
   declarations: [

@@ -1,5 +1,3 @@
-import { JitEmitterVisitor } from '@angular/compiler/src/output/output_jit';
-import { PlayerService } from '../player/player.service';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
@@ -13,11 +11,7 @@ export class YoutubeService {
   private currentPlaylistId = 'PLLsmbWsQuHtRjX_JQwBuSWaF3Qie7Au7u';
 
 
-  constructor(
-    private http: Http
-    ) {
-    
-  }
+  constructor(private http: Http ) {}
 
   getRlaylistItemsRequestParams(nextPageToken): URLSearchParams {
     let params: URLSearchParams = new URLSearchParams();
