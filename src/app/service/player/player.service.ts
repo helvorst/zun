@@ -67,8 +67,9 @@ export class PlayerService {
     }
   }
 
-  onPlayerError(er): void {
+  onPlayerError = (er) => {
     console.log(er)
+    this.videoEnded(1);
   }
 
   onPlayerStateChanged = (state) => {

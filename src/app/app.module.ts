@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { VideoComponent } from './youtube/video/video.component';
 import { PlayerComponent } from './youtube/player/player.component';
 import { HeaderComponent } from './common/header/header.component';
+import { VisualisationComponent } from './visualisation/visualisation.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HeaderComponent } from './common/header/header.component';
     PlaylistComponent,
     VideoComponent,
     PlayerComponent,
-    HeaderComponent
+    HeaderComponent,
+    VisualisationComponent
   ],
   imports: [
     BrowserModule,

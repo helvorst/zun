@@ -10,11 +10,13 @@ declare var YT;
 export class PlayerComponent implements OnInit {
   public player;
   private video;
+
   @ViewChild('ytplayer') htmlPlayerElement;
 
   constructor(
     private ytSrv: YoutubeService,
     private playerSrv: PlayerService) { }
+   
 
   ngOnInit() {
      
@@ -26,6 +28,7 @@ export class PlayerComponent implements OnInit {
 
     this.playerSrv.currentVideoObservable
       .subscribe(video => this.select(video));
+
   }
 
   select(video): void {
