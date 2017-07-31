@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Rx';
 export class YoutubeServiceStub {
   private currentPlaylistId = 'PLLsmbWsQuHtRjX_JQwBuSWaF3Qie7Au7u';
   constructor() { }
-  private items = [
+  public items = [
     {
       "kind": "youtube#playlistItem",
       "etag": "\"m2yskBQFythfE4irbTIeOgYYfBU/vUqFa-eiAcKYrqd5h0syFZsn33U\"",

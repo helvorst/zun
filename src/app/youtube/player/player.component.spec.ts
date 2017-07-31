@@ -4,6 +4,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlayerComponent } from './player.component';
 import { MaterialModule } from '@angular/material';
+import { YoutubeServiceStub } from "../../service/youtube/youtube.service.stub";
+import { YoutubeService } from "../../service/youtube/youtube.service";
+import { PlayerServiceStub } from "../../service/player/player.service.stub";
+import { PlayerService } from "../../service/player/player.service";
 
 //jasmine.describe('jh', ()=>{})
 
@@ -15,7 +19,9 @@ describe('PlayerComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PlayerComponent ],
       imports: [MaterialModule],
-      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+      providers: [{provide: YoutubeService, useClass: YoutubeServiceStub},
+      {provide: PlayerService, useClass: PlayerServiceStub}]
     })
     .compileComponents();
   }));
