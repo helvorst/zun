@@ -30,7 +30,7 @@ describe('YoutubeService', () => {
     });
     service.getPlaylistItems()
       .subscribe(result => {
-        for (var i in result) {
+        for (const i in result) {
           expect(result[i]).toEqual(fakeItems.items[i]);
         }
       });

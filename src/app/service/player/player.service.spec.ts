@@ -20,4 +20,8 @@ describe('PlayerService', () => {
   it('should be created', inject([PlayerService], (service: PlayerService) => {
     expect(service).toBeTruthy();
   }));
+
+  it('sgould subscribe to video items', inject([PlayerService], (service: PlayerService) => {
+    expect(service.currentPlaylistItems.length > 0).toBe(true);
+  }))
 });
