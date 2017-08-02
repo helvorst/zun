@@ -1,5 +1,6 @@
 <div class="video" (click)="play()" #videomark 
-[ngClass]="{'active': isActive()}">
+[ngClass]="{'active': isActive()}"
+id={{video.contentDetails.videoId}}>
    <div class="video-status">{{index + 1}}</div>
    <img class="video-thumbnail" src={{video.snippet.thumbnails?.default.url}}>
    <div class="video-description">{{video.snippet.title}}</div>
