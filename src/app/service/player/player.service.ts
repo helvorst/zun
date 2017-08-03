@@ -26,15 +26,24 @@ export class PlayerService {
         this.currentPlaylistItems = playlistItems;
         if (!this.currentVideo) {
           var random = this.getShuffledIndex();
-          this.currentVideo = this.currentPlaylistItems[random];
+          this.play(this.currentPlaylistItems[random]);
         }
       });
   }
 
   getPlayer(element: any): Observable<any> {
-    let playerObservable = new Subject();
-    this.initPlayer(playerObservable, element);
-    return playerObservable;
+      const player = {
+      loadVideoById: () => {},
+      state: {
+        data: 0
+      },
+      playVideo: () => {},
+      pauseVideo: () => {}
+    };
+    return Observable.of(player);
+    // let playerObservable = new Subject();
+    // this.initPlayer(playerObservable, element);
+    // return playerObservable;
   }
 
   waitForPlayerReady(playerObservable: Subject<any>, player: any): void {
@@ -46,25 +55,26 @@ export class PlayerService {
   }
   
   initPlayer(playerObservable: Subject<any>, element: any): any {
-    if (YT && YT.loaded == 1 && this.currentVideo) {
-      const player = new YT.Player(element, {
-        height: '350',
-        width: '600',
-        suggestedQuality: 'large',
-        fs: 0,
-        modestbranding: 1,
-        playsinline: 1,
-        controls: 0,
-        enablejsapi: 1,
-        events: {
-          onError: this.onPlayerError,
-          onStateChange: this.onPlayerStateChanged
-        }
-      }) 
-      this.waitForPlayerReady(playerObservable, player);
-    } else {
-      setTimeout(() => this.initPlayer(playerObservable, element), 100);
-    }
+   
+    // if (YT && YT.loaded == 1 && this.currentVideo) {
+    //   const player = new YT.Player(element, {
+    //     height: '350',
+    //     width: '600',
+    //     suggestedQuality: 'large',
+    //     fs: 0,
+    //     modestbranding: 1,
+    //     playsinline: 1,
+    //     controls: 0,
+    //     enablejsapi: 1,
+    //     events: {
+    //       onError: this.onPlayerError,
+    //       onStateChange: this.onPlayerStateChanged
+    //     }
+    //   }) 
+    //   this.waitForPlayerReady(playerObservable, player);
+    // } else {
+    //   setTimeout(() => this.initPlayer(playerObservable, element), 100);
+    // }
   }
 
   onPlayerError = (er) => {

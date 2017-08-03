@@ -1,15 +1,15 @@
 import { ZunPage } from './app.po';
 import { browser, by, element } from 'protractor/built';
+import { protractor } from "protractor/built/ptor";
 
 describe('zun App', () => {
   let page: ZunPage;
-  page = new ZunPage();
-  page.navigateTo();
-  
-  // beforeEach(() => {
-  //   page = new ZunPage();
-  //   page.navigateTo();
-  // });
+
+  beforeEach(() => {
+    page = new ZunPage();
+    page.navigateTo();
+    //browser.sleep(5000);
+  });
 
   // it('should display title', () => {
   //   //browser.pause()
@@ -26,16 +26,14 @@ describe('zun App', () => {
   //   var player2 = element(by.id('ytplayer'));
   //   expect(player).not.toEqual(player2);
   // });c
-  it('should navigate videos with buttons', (done) => {
-    // const btnNext = element(by.id('btnNext'));
-    // const btnPrevious = element(by.id('btnPrevious'));
-    const song = element(by.css('.player-title')).getText();
-    //btnNext.click(); 
-    var video = element.all(by.css('.video')).get(0);
-    video.click();
-    const song2 = element(by.css('.player-title')).getText();      
-    expect(song).not.toEqual(song2);
-  
+  it('should navigate videos with buttons', () => {
+    const btnNext = element(by.id('btnNext'));
+    browser.sleep(5000);
+    const song = element(by.css('.track-name'));
+    btnNext.click();
+    browser.sleep(5000);
+    const song2 = element(by.css('.player-title'));  
+    expect(song.getText()).not.toEqual(song2.getText());
   })
 
 });

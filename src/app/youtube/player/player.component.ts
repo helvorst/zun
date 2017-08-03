@@ -16,23 +16,24 @@ export class PlayerComponent implements OnInit {
   constructor(
     private ytSrv: YoutubeService,
     private playerSrv: PlayerService) { }
-   
+
 
   ngOnInit() {
-     
+
     this.playerSrv.getPlayer(this.htmlPlayerElement.nativeElement)
-    .subscribe(player  => {
-      this.player = player;
-      this.playerSrv.switchTo(1);
-    })
+      .subscribe(player => {
+        this.player = player;
+      })
 
     this.playerSrv.currentVideoObservable
-      .subscribe(video => this.select(video));
+      .subscribe(video => {
+        this.video = video;
+        this.select(video);
+      });
 
   }
 
   select(video): void {
-    this.video = video;
     this.player.loadVideoById({
       videoId: video.contentDetails.videoId
     });
