@@ -8,6 +8,7 @@ exports.config = {
   specs: [
     './e2e/**/*.e2e-spec.ts'
   ],
+  useAllAngular2AppRoots: true,
   capabilities: {
     'browserName': 'chrome'
   },
@@ -16,8 +17,8 @@ exports.config = {
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 10000,
-    print: function() {}
+    defaultTimeoutInterval: 15000,
+    print: function () { }
   },
   onPrepare() {
     require('ts-node').register({
@@ -25,6 +26,6 @@ exports.config = {
     });
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
     //browser.driver.manage().window().maximize();
-    browser.ignoreSynchronization = false;
+    //browser.ignoreSynchronization = true;
   }
 };

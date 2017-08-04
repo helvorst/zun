@@ -1,6 +1,7 @@
 import { PlayerService } from '../../service/player/player.service';
 import { YoutubeService } from '../../service/youtube/youtube.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Observable } from "rxjs";
 declare var YT;
 @Component({
   selector: 'app-player',
@@ -20,12 +21,17 @@ export class PlayerComponent implements OnInit {
 
   ngOnInit() {
 
-    this.playerSrv.getPlayer(this.htmlPlayerElement.nativeElement)
-      .subscribe(player => {
-        this.player = player;
-      })
+    Observable.zip(
+      this.playerSrv.getPlayer(this.htmlPlayerElement.nativeElement),
+      this.playerSrv.currentVideoObservable.take(1),
+      (player, video) => [player, video]
+    )
+    .subscribe(values => {
+      this.player = values[0];
+      this.select(values[1]);
+    })
 
-    this.playerSrv.currentVideoObservable
+    this.playerSrv.currentVideoObservable.skip(1)
       .subscribe(video => {
         this.video = video;
         this.select(video);

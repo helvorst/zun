@@ -21,6 +21,7 @@ export class PlayerService {
   public videoEnded = this.switchTo;
 
   constructor(private ytSrv: YoutubeService) {
+
     ytSrv.getPlaylistItems()
       .subscribe(playlistItems => {
         this.currentPlaylistItems = playlistItems;
@@ -32,49 +33,42 @@ export class PlayerService {
   }
 
   getPlayer(element: any): Observable<any> {
-      const player = {
-      loadVideoById: () => {},
-      state: {
-        data: 0
-      },
-      playVideo: () => {},
-      pauseVideo: () => {}
-    };
-    return Observable.of(player);
-    // let playerObservable = new Subject();
-    // this.initPlayer(playerObservable, element);
-    // return playerObservable;
+    let playerObservable = new Subject();
+    this.initPlayer(playerObservable, element);
+    return playerObservable;
   }
 
   waitForPlayerReady(playerObservable: Subject<any>, player: any): void {
-    if(player.B){
-      playerObservable.next(player);
-    } else {
-      setTimeout(()=> this.waitForPlayerReady(playerObservable, player), 100);
-    }
-  }
-  
-  initPlayer(playerObservable: Subject<any>, element: any): any {
-   
-    // if (YT && YT.loaded == 1 && this.currentVideo) {
-    //   const player = new YT.Player(element, {
-    //     height: '350',
-    //     width: '600',
-    //     suggestedQuality: 'large',
-    //     fs: 0,
-    //     modestbranding: 1,
-    //     playsinline: 1,
-    //     controls: 0,
-    //     enablejsapi: 1,
-    //     events: {
-    //       onError: this.onPlayerError,
-    //       onStateChange: this.onPlayerStateChanged
-    //     }
-    //   }) 
-    //   this.waitForPlayerReady(playerObservable, player);
+    const ready = Observable.timer(1000)
+      .subscribe(() => {
+        if (player.B) {
+          playerObservable.next(player);
+          ready.unsubscribe();
+        }
+      })
+    // if(player.B){
+    //   playerObservable.next(player);
     // } else {
-    //   setTimeout(() => this.initPlayer(playerObservable, element), 100);
+    //   setTimeout(()=> this.waitForPlayerReady(playerObservable, player), 500);
     // }
+  }
+
+  initPlayer(playerObservable: Subject<any>, element: any): any {
+    const player = new YT.Player(element, {
+      height: '350',
+      width: '600',
+      suggestedQuality: 'large',
+      fs: 0,
+      modestbranding: 1,
+      playsinline: 1,
+      controls: 0,
+      enablejsapi: 1,
+      events: {
+        onError: this.onPlayerError,
+        onStateChange: this.onPlayerStateChanged
+      }
+    })
+    this.waitForPlayerReady(playerObservable, player);
   }
 
   onPlayerError = (er) => {
@@ -107,7 +101,7 @@ export class PlayerService {
 
   switchTo(step?: number): void {
     let targetVideo;
-    if (this.playerState.isLooped && !step){
+    if (this.playerState.isLooped && !step) {
       targetVideo = this.currentVideo;
     } else if (this.playerState.isShuffled) {
       let shuffledIndex = 0;

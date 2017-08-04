@@ -21,7 +21,9 @@
       "styles": [
         "styles.less"
       ],
-      "scripts": [],
+      "scripts": [
+        "https://www.youtube.com/player_api"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
