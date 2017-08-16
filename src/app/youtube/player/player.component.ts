@@ -1,6 +1,6 @@
 import { PlayerService } from '../../service/player/player.service';
 import { YoutubeService } from '../../service/youtube/youtube.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable } from "rxjs";
 declare var YT;
 @Component({
@@ -17,49 +17,23 @@ export class PlayerComponent implements OnInit {
   constructor(
     private ytSrv: YoutubeService,
     private playerSrv: PlayerService) { }
-
-
+    
   ngOnInit() {
 
-    Observable.zip(
-      this.playerSrv.getPlayer(this.htmlPlayerElement.nativeElement),
-      this.playerSrv.currentVideoObservable.take(1),
-      (player, video) => [player, video]
-    )
-    .subscribe(values => {
-      this.player = values[0];
-      this.select(values[1]);
-    })
+    // Observable.zip(
+    //   this.playerSrv.getPlayer(this.htmlPlayerElement.nativeElement),
+    //   this.playerSrv.currentVideoObservable.take(1),
+    //   (player, video) => [player, video]
+    // )
+    // .subscribe(values => {
+    //   this.player = values[0];
+    //   this.select(values[1]);
+    // })
 
-    this.playerSrv.currentVideoObservable.skip(1)
-      .subscribe(video => {
-        this.video = video;
-        this.select(video);
-      });
-
-  }
-
-  select(video): void {
-    this.player.loadVideoById({
-      videoId: video.contentDetails.videoId
-    });
-  }
-
-  playStop(): void {
-    this.playerSrv.playerState.isStopped ? this.player.playVideo() : this.player.pauseVideo();
-    this.playerSrv.setState('isStopped');
-  }
-
-  switchTo(step): void {
-    this.playerSrv.switchTo(step);
-  }
-
-  setLoop(): void {
-    this.playerSrv.setState('isLooped');
-  }
-
-  setShuffle(): void {
-    this.playerSrv.setState('isShuffled');
+    this.playerSrv.getPlayer('#ytplayer');
+    // if (this.playerSrv.player) {
+    //   this.playerSrv.switchTo(1);
+    // }
   }
 
 }

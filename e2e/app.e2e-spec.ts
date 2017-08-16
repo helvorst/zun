@@ -28,11 +28,13 @@ describe('zun App', () => {
   // });c
   it('should navigate videos with buttons', (done) => {
     const btnNext = element(by.id('btnNext'));
-    browser.sleep(5000);
     const song = element(by.css('.track-name')).getText();
+    console.log(song)
     btnNext.click();
-    browser.sleep(5000);
+    console.log('click')
+    browser.sleep(5000)
     const song2 = element(by.css('.track-name')).getText();  
+    console.log(song2)
     expect(song).not.toEqual(song2);
     done();
   })
