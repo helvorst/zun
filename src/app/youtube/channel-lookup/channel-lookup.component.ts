@@ -31,7 +31,6 @@ export class ChannelLookupComponent implements OnInit {
   }
 
   setChannel(channel): void {
-    //this.term.value = channel.snippet.title;
     this.startSearch = false;
     this.playerSrv.setChannel(channel);
   }

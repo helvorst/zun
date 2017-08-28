@@ -61,7 +61,13 @@ export class YoutubeService {
     params.set('part', 'snippet');
     return this.http.get(this.baseUrl + 'search',
       { search: params })
-      .map(response => response.json().items);
+      .map(response => {
+        const items = response.json().items;
+        return items.map(item => {
+          item.id = item.id.channelId;
+          return item;
+        });
+      })     
   }
 
   searchChannel(value: string): Observable<any> {
@@ -90,5 +96,24 @@ export class YoutubeService {
       .map(items => items.sort(sortPlaylistsByItem));
   }
 
+  getInfoOfPlaylist(playlistId): Observable<any> {
+    const params = this.getBaseRequestParams();
+    params.set("type", "playlist");
+    params.set('q', playlistId);
+    params.set('part', 'snippet');
+    return this.http.get(this.baseUrl + 'search',
+      { search: params })
+      .map(response => response.json().items);
+  }
+
+  // getInfoOfChannel(channelId): Observable<any> {
+  //   const params = this.getBaseRequestParams();
+  //   params.set("type", "channel");
+  //   params.set('q', channelId);
+  //   params.set('part', 'snippet');
+  //   return this.http.get(this.baseUrl + 'search',
+  //     { search: params })
+  //     .map(response => response.json());
+  // }
 
 }

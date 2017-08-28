@@ -21,7 +21,9 @@ export class PlaylistLookupComponent implements OnInit {
   }
 
    setPlaylist(playlist): void {
-    this.playerSrv.currentPlaylist = playlist;
-    this.router.navigate(['/watch']);
+    this.playerSrv.setPlaylist(playlist.id);
+    this.router.navigate(['/watch', 
+    //this.playerSrv.currentChannel.id, 
+    playlist.id]);
   }
 }

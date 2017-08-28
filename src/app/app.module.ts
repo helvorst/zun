@@ -22,6 +22,7 @@ import { NavbarComponent } from "./common/navbar/navbar.component";
 import { PlayerControlsComponent } from './common/player-controls/player-controls.component';
 import { ChannelLookupComponent } from './youtube/channel-lookup/channel-lookup.component';
 import { PlaylistLookupComponent } from './youtube/playlist-lookup/playlist-lookup.component';
+import { IsWatchValidService } from "./service/is-watch-valid/is-watch-valid.service";
 
 //import 'jasmine';
 //  declare var jasmine
@@ -56,7 +57,8 @@ import { PlaylistLookupComponent } from './youtube/playlist-lookup/playlist-look
   ],
   providers: [
     YoutubeService,
-    PlayerService
+    PlayerService,
+    IsWatchValidService
   ],
   bootstrap: [AppComponent]
 })

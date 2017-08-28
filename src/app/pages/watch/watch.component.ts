@@ -1,5 +1,6 @@
 import { PlayerService } from '../../service/player/player.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from "@angular/router";
 
 @Component({
   selector: 'app-watch',
@@ -8,10 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WatchComponent implements OnInit {
 
-  constructor(private playerSrv: PlayerService) { }
+  constructor(
+    private playerSrv: PlayerService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.playerSrv.updatePlaylistItems();
+   this.route.paramMap
+    .subscribe((params: ParamMap) => {
+     const playlistId = params.get('playlistId');
+     this.playerSrv.setPlaylist(playlistId);
+    });
   }
 
 }

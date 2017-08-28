@@ -1,3 +1,18 @@
-.router-wrapper {
+@import '../styles.variables.less';
+
+.page-sidenav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
     
+    &__content {
+        height: calc(~"100vh");
+    }
+    &__sidebar {
+        width: @sidenav-width;
+        overflow-x: hidden;
+    }
+
 }

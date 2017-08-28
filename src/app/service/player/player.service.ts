@@ -27,41 +27,60 @@ export class PlayerService {
   public videoEnded = this.switchTo;
 
   constructor(private ytSrv: YoutubeService) {
-    ytSrv.getChannelByName('helvorst')
-      .subscribe(channels => {
-        this.setChannel(channels[0]);
+
+  }
+
+  getDefaultChannel(): Observable<any> {
+    return this.ytSrv.getChannelByName('helvorst')
+      .flatMap(defaultChannels => {
+        return this.setChannel(defaultChannels[0]);
       });
   }
+
+  getPresetChannel(playlistId): Observable<any> {
+    return this.ytSrv.getInfoOfPlaylist(playlistId)
+      .flatMap(foundPlaylists => {
+        this.currentPlaylist = foundPlaylists[0];
+        const targetChannelId = this.currentPlaylist.snippet.channelId;
+        const targetchannelTitle = this.currentPlaylist.snippet.channelTitle;
+        
+        return Observable.of(this.currentPlaylist);
+      });
+  }
+
 
   setChannel(channel) {
-    this.currentChannelPlaylists = [];
-    this.currentPlaylistItems = [];
-    this.currentChannel = channel;
+    const ready = new Subject<boolean>();
+    if (!this.currentChannel || this.currentChannel.id != channel.id) {
+      this.currentChannelPlaylists = [];
+      this.currentPlaylistItems = [];
+      this.currentChannel = channel;
 
-    this.ytSrv.getChannelPlaylists(this.currentChannel.snippet.channelId || this.currentChannel.id)
-      .subscribe(playlists => {
-        this.currentChannelPlaylists = playlists;
-        this.currentPlaylist = playlists[0];
-        this.ytSrv.getPlaylistItems(this.currentPlaylist.id)
-          .subscribe(playlistItems => {
-            this.currentPlaylistItems = playlistItems;
-            if (!this.currentVideo) {
-              var random = this.getShuffledIndex();
-              this.play(this.currentPlaylistItems[random]);
-            }
-          });
-      })
+      this.ytSrv.getChannelPlaylists(this.currentChannel.id)
+        .subscribe(playlists => {
+          this.currentChannelPlaylists = playlists;
+          if (!this.currentPlaylist) {
+            this.currentPlaylist = playlists[0];
+          }
+          ready.next(true);
+        })
+    } else {
+      setTimeout(() => ready.next(true), 100);
+    }
+    return ready;
   }
 
-  updatePlaylistItems(): void {
-    this.ytSrv.getPlaylistItems(this.currentPlaylist.id)
-      .subscribe(playlistItems => {
-        this.currentPlaylistItems = playlistItems;
-        if (!this.currentVideo) {
+  setPlaylist(playlistId): void {
+    if (!this.currentPlaylistItems.length || this.currentPlaylist.id != playlistId) {
+      this.ytSrv.getPlaylistItems(playlistId)
+        .subscribe(playlistItems => {
+          this.currentPlaylistItems = playlistItems;
           var random = this.getShuffledIndex();
           this.play(this.currentPlaylistItems[random]);
-        }
-      });
+        });
+    } else {
+      setTimeout(() => this.play(this.currentVideo), 500);
+    }
   }
 
   getPlayer(element: any): void {

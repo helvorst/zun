@@ -14,7 +14,7 @@ export class PlaylistComponent implements OnInit {
   constructor(private playerSrv: PlayerService) { }
 
   ngOnInit() {
-     //this.playlist = this.ytSrv.getPlaylistItems();    
+    
   }
 
 }

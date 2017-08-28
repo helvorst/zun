@@ -1,14 +1,20 @@
 <div class="header">
+  <md-toolbar>
+    <md-toolbar-row>
 
-  <div class="zun-logo">
-    <span class="zun-logo__circle" [ngClass]="{'pulse' : isPlaying}"></span>
-    <span class="zun-logo__dot"></span>
-  </div>
+      <div class="zun-logo" (click)="logoControl()">
+        <span class="zun-logo__circle" [ngClass]="{'pulse' : isPlaying}"></span>
+        <span class="zun-logo__dot"></span>
+      </div>
 
-  <div class=header-main>
-    <div class="zun-title">Zun</div>
-    <app-navbar></app-navbar>
-  </div>
+      <div class="zun-title">Zun</div>
+      <app-player-controls></app-player-controls>
 
-  <app-player-controls></app-player-controls>
+    </md-toolbar-row>
+
+    <md-toolbar-row>
+      <app-navbar></app-navbar>
+    </md-toolbar-row>
+
+  </md-toolbar>
 </div>
