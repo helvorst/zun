@@ -9,16 +9,10 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 })
 export class WatchComponent implements OnInit {
 
-  constructor(
-    private playerSrv: PlayerService,
-    private route: ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit() {
-   this.route.paramMap
-    .subscribe((params: ParamMap) => {
-     const playlistId = params.get('playlistId');
-     this.playerSrv.setPlaylist(playlistId);
-    });
+   
   }
 
 }

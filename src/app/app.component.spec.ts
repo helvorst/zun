@@ -11,6 +11,18 @@ import { TestBed, async } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from '@angular/material';
+import { RouterModule } from "@angular/router";
+import { routes } from "./routes";
+import { WatchComponent } from "./pages/watch/watch.component";
+import { SearchComponent } from "./pages/search/search.component";
+import { NavbarComponent } from "./common/navbar/navbar.component";
+import { PlayerControlsComponent } from "./common/player-controls/player-controls.component";
+import { ChannelLookupComponent } from "./youtube/channel-lookup/channel-lookup.component";
+import { PlaylistLookupComponent } from "./youtube/playlist-lookup/playlist-lookup.component";
+import { PlayerTitleComponent } from "./common/player-title/player-title.component";
+import { TooltabComponent } from "./common/tooltab/tooltab.component";
+import { ReactiveFormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -21,17 +33,29 @@ describe('AppComponent', () => {
         PlaylistComponent,
         HeaderComponent,
         VideoComponent,
-        VisualisationComponent
+        VisualisationComponent,
+        WatchComponent,
+        SearchComponent,
+        NavbarComponent,
+        PlayerControlsComponent,
+        ChannelLookupComponent,
+        PlaylistLookupComponent,
+        PlayerTitleComponent,
+        TooltabComponent
       ],
-      imports: [MaterialModule],
+      imports: [
+        MaterialModule,
+        RouterTestingModule.withRoutes(routes),
+        ReactiveFormsModule
+      ],
     })
-    .overrideComponent(AppComponent, {
-      set: {
-        providers: [{provide: YoutubeService, useClass: YoutubeServiceStub},
-        {provide: PlayerService, useClass: PlayerServiceStub}]
-      }
-    })
-    .compileComponents();
+      .overrideComponent(AppComponent, {
+        set: {
+          providers: [{ provide: YoutubeService, useClass: YoutubeServiceStub },
+          { provide: PlayerService, useClass: PlayerServiceStub }]
+        }
+      })
+      .compileComponents();
   }));
 
   it('should create the app', async(() => {

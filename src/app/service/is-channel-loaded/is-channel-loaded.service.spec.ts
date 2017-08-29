@@ -1,20 +1,20 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { IsWatchValidService } from './is-watch-valid.service';
+import { IsChannelLoadedService } from './is-channel-loaded.service';
+import { RouterTestingModule } from "@angular/router/testing";
 import { PlayerService } from "../player/player.service";
 import { PlayerServiceStub } from "../player/player.service.stub";
-import { RouterTestingModule } from "@angular/router/testing";
 
-describe('IsWatchValidService', () => {
+describe('IsSearchLoadedService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [IsWatchValidService,
+      providers: [IsChannelLoadedService,
       { provide: PlayerService, useClass: PlayerServiceStub }],
       imports: [RouterTestingModule]
     });
   });
 
-  it('should be created', inject([IsWatchValidService], (service: IsWatchValidService) => {
+  it('should be created', inject([IsChannelLoadedService], (service: IsChannelLoadedService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -23,6 +23,10 @@ import { PlayerControlsComponent } from './common/player-controls/player-control
 import { ChannelLookupComponent } from './youtube/channel-lookup/channel-lookup.component';
 import { PlaylistLookupComponent } from './youtube/playlist-lookup/playlist-lookup.component';
 import { IsWatchValidService } from "./service/is-watch-valid/is-watch-valid.service";
+import { PlayerTitleComponent } from './common/player-title/player-title.component';
+import { IsPlaylistLoadedService } from "./service/is-playlist-loaded/is-playlist-loaded.service";
+import { IsChannelLoadedService } from "./service/is-channel-loaded/is-channel-loaded.service";
+import { TooltabComponent } from './common/tooltab/tooltab.component';
 
 //import 'jasmine';
 //  declare var jasmine
@@ -41,7 +45,9 @@ import { IsWatchValidService } from "./service/is-watch-valid/is-watch-valid.ser
     NavbarComponent,
     PlayerControlsComponent,
     ChannelLookupComponent,
-    PlaylistLookupComponent
+    PlaylistLookupComponent,
+    PlayerTitleComponent,
+    TooltabComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -51,14 +57,15 @@ import { IsWatchValidService } from "./service/is-watch-valid/is-watch-valid.ser
     BrowserModule,
     HttpModule,
     MaterialModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule,
+    BrowserAnimationsModule 
   ],
   providers: [
     YoutubeService,
     PlayerService,
-    IsWatchValidService
+    IsWatchValidService,
+    IsPlaylistLoadedService,
+    IsChannelLoadedService
   ],
   bootstrap: [AppComponent]
 })

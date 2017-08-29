@@ -43,8 +43,10 @@ export class PlayerService {
         this.currentPlaylist = foundPlaylists[0];
         const targetChannelId = this.currentPlaylist.snippet.channelId;
         const targetchannelTitle = this.currentPlaylist.snippet.channelTitle;
-        
-        return Observable.of(this.currentPlaylist);
+        return this.ytSrv.getChannelByName(targetchannelTitle)
+        .flatMap(channels => {
+          return this.setChannel(channels[0]);
+        })
       });
   }
 
@@ -70,9 +72,10 @@ export class PlayerService {
     return ready;
   }
 
-  setPlaylist(playlistId): void {
-    if (!this.currentPlaylistItems.length || this.currentPlaylist.id != playlistId) {
-      this.ytSrv.getPlaylistItems(playlistId)
+  setPlaylist(playlist): void {
+    if (!this.currentPlaylistItems.length || this.currentPlaylist.id != playlist.id) {
+      this.currentPlaylist = playlist;
+      this.ytSrv.getPlaylistItems(playlist.id)
         .subscribe(playlistItems => {
           this.currentPlaylistItems = playlistItems;
           var random = this.getShuffledIndex();

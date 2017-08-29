@@ -1,25 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlayerControlsComponent } from './player-controls.component';
-import { MaterialModule } from "@angular/material";
+import { PlayerTitleComponent } from './player-title.component';
 import { PlayerService } from "../../service/player/player.service";
 import { PlayerServiceStub } from "../../service/player/player.service.stub";
 
-describe('PlayerControlsComponent', () => {
-  let component: PlayerControlsComponent;
-  let fixture: ComponentFixture<PlayerControlsComponent>;
+describe('PlayerTitleComponent', () => {
+  let component: PlayerTitleComponent;
+  let fixture: ComponentFixture<PlayerTitleComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayerControlsComponent ],
-      imports: [MaterialModule],
+      declarations: [ PlayerTitleComponent ],
       providers: [{ provide: PlayerService, useClass: PlayerServiceStub }]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlayerControlsComponent);
+    fixture = TestBed.createComponent(PlayerTitleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

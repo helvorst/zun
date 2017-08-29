@@ -12,7 +12,6 @@ export class PlaylistLookupComponent implements OnInit {
 
   playlists;
   constructor(
-    private ytSrv: YoutubeService,
     private playerSrv: PlayerService,
     private router: Router) { }
 
@@ -21,7 +20,7 @@ export class PlaylistLookupComponent implements OnInit {
   }
 
    setPlaylist(playlist): void {
-    this.playerSrv.setPlaylist(playlist.id);
+    this.playerSrv.setPlaylist(playlist);
     this.router.navigate(['/watch', 
     //this.playerSrv.currentChannel.id, 
     playlist.id]);

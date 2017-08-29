@@ -28,7 +28,7 @@ describe('YoutubeService', () => {
         body: JSON.stringify(fakeItems)
       })));
     });
-    service.getPlaylistItems()
+    service.getPlaylistItems("fakePlaylistId")
       .subscribe(result => {
         for (const i in result) {
           expect(result[i]).toEqual(fakeItems.items[i]);

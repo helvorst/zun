@@ -12,7 +12,7 @@ export class YoutubeService {
 
   constructor(private http: Http) {
 
-   }
+  }
 
   getBaseRequestParams(nextPageToken?): URLSearchParams {
     let params: URLSearchParams = new URLSearchParams();
@@ -67,7 +67,7 @@ export class YoutubeService {
           item.id = item.id.channelId;
           return item;
         });
-      })     
+      })
   }
 
   searchChannel(value: string): Observable<any> {
@@ -103,7 +103,10 @@ export class YoutubeService {
     params.set('part', 'snippet');
     return this.http.get(this.baseUrl + 'search',
       { search: params })
-      .map(response => response.json().items);
+      .map(response => response.json().items.map(item => {
+        item.id = item.id.playlistId;
+        return item;
+      }));
   }
 
   // getInfoOfChannel(channelId): Observable<any> {
@@ -115,5 +118,6 @@ export class YoutubeService {
   //     { search: params })
   //     .map(response => response.json());
   // }
+  
 
 }

@@ -12,58 +12,62 @@ export class VisualisationComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
-    const audioCtx = new ((window as any).AudioContext)();
-    const analyser = audioCtx.createAnalyser();
-    const WIDTH = this.vizElement.nativeElement.clientWidth;
-    const HEIGHT =  this.vizElement.nativeElement.clientHeight - 20;
-    const canvas: any = document.getElementById('canvas');
-    canvas.setAttribute('width', WIDTH);
-    canvas.setAttribute('height', HEIGHT);
-    var canvasCtx = canvas.getContext('2d');
 
-    navigator.mediaDevices.getUserMedia({ video: false, audio: true })
-      .then((stream) => {
-        var source = audioCtx.createMediaStreamSource(stream);
-        source.connect(analyser);
-        analyser.fftSize = 256;
-        analyser.minDecibels = -135;
-        var bufferLength = analyser.frequencyBinCount;
-        console.log(bufferLength);
-        var dataArray = new Uint8Array(bufferLength);
+    setTimeout(() => {
+      const audioCtx = new ((window as any).AudioContext)();
+      const analyser = audioCtx.createAnalyser();
+      const WIDTH = this.vizElement.nativeElement.clientWidth;
+      const HEIGHT = this.vizElement.nativeElement.clientHeight;
+      const canvas: any = document.getElementById('canvas');
+      canvas.setAttribute('width', WIDTH-5);
+      canvas.setAttribute('height', HEIGHT-5);
+      var canvasCtx = canvas.getContext('2d');
+      navigator.mediaDevices.getUserMedia({ video: false, audio: true })
+        .then((stream) => {
+          var source = audioCtx.createMediaStreamSource(stream);
+          source.connect(analyser);
+          analyser.fftSize = 256;
+          analyser.minDecibels = -135;
+          var bufferLength = analyser.frequencyBinCount;
+          console.log(bufferLength);
+          var dataArray = new Uint8Array(bufferLength);
 
-        canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
-        function draw() {
-          var drawVisual = requestAnimationFrame(draw);
+          canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+          function draw() {
+            var drawVisual = requestAnimationFrame(draw);
 
-          analyser.getByteFrequencyData(dataArray);
+            analyser.getByteFrequencyData(dataArray);
 
-          canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-          canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-          var barWidth = (WIDTH / bufferLength/1.5);
-          var barHeight;
-          var x = 0;
+            canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+            canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+            var barWidth = (WIDTH / bufferLength / 1.5);
+            var barHeight;
+            var x = 0;
 
-          for (var i = 0; i < bufferLength; i++) {
-            barHeight = dataArray[i];
-            const redI = i < 43 ? 2 : 0.5;
-            const greenI = i > 43  && i < 86 ?  2 : 0.5;
-            const blueI = i > 86  ?  2 : 0.5;
-            const colors = [barHeight*redI, barHeight*greenI, barHeight*blueI];
-            //console.log(colors.join(','))
-            canvasCtx.fillStyle = 'rgb(' + colors.join(',') +  ')';
-            canvasCtx.fillRect(x, HEIGHT - barHeight/2, barWidth, barHeight);
+            for (var i = 0; i < bufferLength; i++) {
+              barHeight = dataArray[i];
+              const redI = i < 43 ? 2 : 0.5;
+              const greenI = i > 43 && i < 86 ? 2 : 0.5;
+              const blueI = i > 86 ? 2 : 0.5;
+              const colors = [barHeight * redI, barHeight * greenI, barHeight * blueI];
+              //console.log(colors.join(','))
+              canvasCtx.fillStyle = 'rgb(' + colors.join(',') + ')';
+              canvasCtx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight);
 
-            x += (barWidth + 1)*1.5;
-          }
-        };
-        draw();
-       
-      })
-      .catch(function (err) {
-        console.log("An error occured! " + err);
-      });
- 
+              x += (barWidth + 1) * 1.5;
+            }
+          };
+          draw();
+
+        })
+        .catch(function (err) {
+          console.log("An error occured! " + err);
+        });
+    }, 1000)
+
+
+
+
   }
 
 }

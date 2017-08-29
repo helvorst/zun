@@ -1,0 +1,19 @@
+<div class="player-title" *ngIf="playerSrv.currentPlaylist">
+  <div class="player-title-part1">
+    <div *ngIf="playerSrv.currentVideo" class="player-title-section">
+      <span class="player-title-label">plays</span>
+      <span class="player-title-name">{{playerSrv.currentVideo.snippet.title}}</span>
+    </div>
+  </div>
+
+  <div class="player-title-part2">
+    <div class="player-title-section">
+      <span class="player-title-label">from</span>
+      <span class="player-title-name">{{playerSrv.currentPlaylist.snippet.title}}</span>
+    </div>
+    <div class="player-title-section">
+      <span class="player-title-label">by</span>
+      <span class="player-title-name">{{playerSrv.currentPlaylist.snippet.channelTitle}}</span>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,7 @@
 <div class="header">
   <md-toolbar>
+
+
     <md-toolbar-row>
 
       <div class="zun-logo" (click)="logoControl()">
@@ -8,9 +10,15 @@
       </div>
 
       <div class="zun-title">Zun</div>
-      <app-player-controls></app-player-controls>
+
+      <!-- <div class="header-player"> -->
+        <app-player-controls></app-player-controls>
+        <app-player-title></app-player-title>
+      <!-- </div> -->
 
     </md-toolbar-row>
+
+
 
     <md-toolbar-row>
       <app-navbar></app-navbar>
