@@ -1,4 +1,3 @@
-const webpack = require("webpack");
 const fs = require('fs');
 const path = require('path');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
@@ -6,12 +5,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const postcssUrl = require('postcss-url');
 const cssnano = require('cssnano');
-
 const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
 const { GlobCopyWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
 const { CommonsChunkPlugin } = require('webpack').optimize;
 const { AotPlugin } = require('@ngtools/webpack');
-const { WebpackWarPlugin } = require('');
+const { WebpackWarPlugin } = require('webpack-war-plugin');
 
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
@@ -57,6 +55,7 @@ const postcssPlugins = function () {
     autoprefixer(),
   ].concat(minimizeCss ? [cssnano(minimizeOptions)] : []);
 };
+
 
 
 
@@ -363,11 +362,6 @@ const config = {
     ]
   },
   "plugins": [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
     new NoEmitOnErrorsPlugin(),
     new GlobCopyWebpackPlugin({
       "patterns": [
@@ -441,7 +435,6 @@ const config = {
       "sourceRoot": "webpack:///"
     }),
     new NamedModulesPlugin({}),
-    // new BabiliPlugin({}),
     new AotPlugin({
       "mainPath": "main.ts",
       "hostReplacementPaths": {
@@ -469,7 +462,6 @@ const config = {
     "historyApiFallback": true
   }
 };
-
 
 module.exports = function (env) {
   if (env.type == 'prod') {
