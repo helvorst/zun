@@ -80,14 +80,14 @@ const config = {
   },
   "entry": {
     "main": [
-      "./src\\main.ts"
+      "./src/main.ts"
     ],
     "polyfills": [
-      "./src\\polyfills.ts"
+      "./src/polyfills.ts"
     ],
     "styles": [
-      "./src\\styles.less",
-      "./src\\theme.sass"
+      "./src/styles.less",
+      "./src/theme.sass"
     ]
   },
   "output": {
@@ -123,8 +123,8 @@ const config = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src\\styles.less"),
-          path.join(process.cwd(), "src\\theme.sass")
+          path.join(process.cwd(), "src/styles.less"),
+          path.join(process.cwd(), "src/theme.sass")
         ],
         "test": /\.css$/,
         "use": [
@@ -147,8 +147,8 @@ const config = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src\\styles.less"),
-          path.join(process.cwd(), "src\\theme.sass")
+          path.join(process.cwd(), "src/styles.less"),
+          path.join(process.cwd(), "src/theme.sass")
         ],
         "test": /\.scss$|\.sass$/,
         "use": [
@@ -179,8 +179,8 @@ const config = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src\\styles.less"),
-          path.join(process.cwd(), "src\\theme.sass")
+          path.join(process.cwd(), "src/styles.less"),
+          path.join(process.cwd(), "src/theme.sass")
         ],
         "test": /\.less$/,
         "use": [
@@ -209,8 +209,8 @@ const config = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src\\styles.less"),
-          path.join(process.cwd(), "src\\theme.sass")
+          path.join(process.cwd(), "src/styles.less"),
+          path.join(process.cwd(), "src/theme.sass")
         ],
         "test": /\.styl$/,
         "use": [
@@ -240,8 +240,8 @@ const config = {
       },
       {
         "include": [
-          path.join(process.cwd(), "src\\styles.less"),
-          path.join(process.cwd(), "src\\theme.sass")
+          path.join(process.cwd(), "src/styles.less"),
+          path.join(process.cwd(), "src/theme.sass")
         ],
         "test": /\.css$/,
         "use": [
@@ -264,8 +264,8 @@ const config = {
       },
       {
         "include": [
-          path.join(process.cwd(), "src\\styles.less"),
-          path.join(process.cwd(), "src\\theme.sass")
+          path.join(process.cwd(), "src/styles.less"),
+          path.join(process.cwd(), "src/theme.sass")
         ],
         "test": /\.scss$|\.sass$/,
         "use": [
@@ -296,8 +296,8 @@ const config = {
       },
       {
         "include": [
-          path.join(process.cwd(), "src\\styles.less"),
-          path.join(process.cwd(), "src\\theme.sass")
+          path.join(process.cwd(), "src/styles.less"),
+          path.join(process.cwd(), "src/theme.sass")
         ],
         "test": /\.less$/,
         "use": [
@@ -326,8 +326,8 @@ const config = {
       },
       {
         "include": [
-          path.join(process.cwd(), "src\\styles.less"),
-          path.join(process.cwd(), "src\\theme.sass")
+          path.join(process.cwd(), "src/styles.less"),
+          path.join(process.cwd(), "src/theme.sass")
         ],
         "test": /\.styl$/,
         "use": [
