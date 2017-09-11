@@ -16,13 +16,11 @@ export class PlaylistLookupComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    
+
   }
 
-   setPlaylist(playlist): void {
+  setPlaylist(playlist): void {
     this.playerSrv.setPlaylist(playlist);
-    this.router.navigate(['/watch', 
-    //this.playerSrv.currentChannel.id, 
-    playlist.id]);
+    this.router.navigate(['/watch', playlist.id]);
   }
 }
