@@ -11,7 +11,7 @@ const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = req
 const { GlobCopyWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
 const { CommonsChunkPlugin } = require('webpack').optimize;
 const { AotPlugin } = require('@ngtools/webpack');
-const { WebpackWarPlugin } = require('webpack-war-plugin');
+const { WebpackWarPlugin } = require('');
 const BabiliPlugin = require("babili-webpack-plugin");
 
 const nodeModules = path.join(process.cwd(), 'node_modules');

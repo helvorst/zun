@@ -11,7 +11,6 @@
     "lint": "ng lint",
     "e2e": "protractor ./protractor.conf.js",
     "pree2e": "webdriver-manager update --standalone false --gecko false --quiet"
-    
   },
   "private": true,
   "dependencies": {
@@ -29,7 +28,6 @@
     "@types/webaudioapi": "0.0.27",
     "core-js": "^2.4.1",
     "rxjs": "^5.4.1",
-    "webpack-deploy2war": "^0.1.1",
     "yt-player": "^2.5.2",
     "zone.js": "^0.8.14"
   },
@@ -71,6 +69,7 @@
     "typescript": "~2.3.3",
     "url-loader": "^0.5.7",
     "webpack": "~2.4.0",
-    "webpack-dev-server": "~2.4.5"
+    "webpack-dev-server": "~2.4.5",
+    "webpack-war-plugin": "^1.0.0-beta.3"
   }
 }
