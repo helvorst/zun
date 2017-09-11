@@ -376,7 +376,7 @@ const config = {
     }),
     new ProgressPlugin(),
     new HtmlWebpackPlugin({
-      "template": "./src\\index.html",
+      "template": "./src/index.html",
       "filename": "./index.html",
       "hash": false,
       "inject": true,
@@ -464,7 +464,7 @@ const config = {
 };
 
 module.exports = function (env) {
-  if (env.type == 'prod') {
+  if (env && env.type == 'prod') {
     console.log('production build')
     config.plugins.push(
       new WebpackWarPlugin({
