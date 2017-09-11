@@ -38,7 +38,6 @@
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
     "autoprefixer": "^6.5.3",
-    "babili-webpack-plugin": "^0.1.2",
     "codelyzer": "~3.0.1",
     "css-loader": "^0.28.1",
     "cssnano": "^3.10.0",
