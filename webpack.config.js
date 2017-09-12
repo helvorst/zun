@@ -10,7 +10,8 @@ const { GlobCopyWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/p
 const { CommonsChunkPlugin } = require('webpack').optimize;
 const { AotPlugin } = require('@ngtools/webpack');
 const { WebpackWarPlugin } = require('webpack-war-plugin');
-
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const realNodeModules = fs.realpathSync(nodeModules);
@@ -469,8 +470,22 @@ module.exports = function (env) {
     config.plugins.push(
       new WebpackWarPlugin({
         archiveName: 'zun'
-      })
-
+      }),
+      // new UglifyJSPlugin({
+      //   parallel: {
+      //     cache: true,
+      //     workers: 2
+      //   },
+      //   sourceMap: true,
+      //   uglifyOptions: {
+      //     ie8: false,
+      //     ecma: 8
+      //   },
+      //   exclude: [
+      //     /vendor.bundle.js/
+      //   ]
+      // })
+       new MinifyPlugin()
     )
     config.output.publicPath = '/zun';
   }
