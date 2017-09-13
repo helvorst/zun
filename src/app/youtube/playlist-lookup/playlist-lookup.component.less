@@ -1,18 +1,26 @@
 .channel-playlists {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    // justify-content: space-between;
+    // align-items: stretch;
 }
 .channel-playlist {
-    margin: 15px 0;
-    // width: 140px;
+    margin: 15px 10px;
+    width: 168px;
     //height: 100%;
     display: flex;
     flex-direction: column;
     cursor: pointer;
+    // align-self: stretch;
 
+    &-title {
+        word-wrap: break-word;
+    }
     &-items {
         font-size: 10px;
+    }
+    & md-card {
+        height: 100%;
     }
 } 
 .active {
