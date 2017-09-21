@@ -12,7 +12,7 @@ const { AotPlugin } = require('@ngtools/webpack');
 const { WebpackWarPlugin } = require('webpack-war-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MinifyPlugin = require("babel-minify-webpack-plugin");
-
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const realNodeModules = fs.realpathSync(nodeModules);
 const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_modules');
@@ -406,6 +406,11 @@ const config = {
           return 0;
         }
       }
+    }),
+    new ScriptExtHtmlWebpackPlugin({
+      //inline: /inline.*/,
+      async: [/styles.*/],
+      //defaultAttribute: 'async'
     }),
     new BaseHrefWebpackPlugin({}),
     new HashedModuleIdsPlugin(),

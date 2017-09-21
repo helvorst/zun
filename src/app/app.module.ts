@@ -26,10 +26,8 @@ import { PlayerTitleComponent } from './common/player-title/player-title.compone
 import { IsPlaylistLoadedService } from "./service/is-playlist-loaded/is-playlist-loaded.service";
 import { IsChannelLoadedService } from "./service/is-channel-loaded/is-channel-loaded.service";
 import { TooltabComponent } from './common/tooltab/tooltab.component';
+import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 
-//import 'jasmine';
-//  declare var jasmine
-//  jasmine  = require('jasmine');
 
 @NgModule({
   declarations: [
@@ -64,8 +62,10 @@ import { TooltabComponent } from './common/tooltab/tooltab.component';
     PlayerService,
     IsWatchValidService,
     IsPlaylistLoadedService,
-    IsChannelLoadedService
+    IsChannelLoadedService,
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

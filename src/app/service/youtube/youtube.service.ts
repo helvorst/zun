@@ -1,8 +1,9 @@
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
-import { Http, Response, URLSearchParams } from '@angular/http';
-
+import { Http, Response, URLSearchParams, RequestOptions } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
+import { Headers } from '@angular/http';
 
 @Injectable()
 export class YoutubeService {
@@ -90,8 +91,14 @@ export class YoutubeService {
     }
     const params = this.getBaseRequestParams();
     params.set("channelId", channelId);
+    const etag = "VPWTmrH7dFmi4s1RqrK4tLejnRI/P5G4cZE0CRzQBXA1ExCbewtb6JE";
+    const headers = new Headers();
+    headers.append('If-None-Match', etag);
     return this.http.get(this.baseUrl + 'playlists',
-      { search: params })
+      {
+        headers: headers,
+        search: params
+      })
       .map(response => response.json().items)
       .map(items => items.sort(sortPlaylistsByItem));
   }
@@ -118,6 +125,6 @@ export class YoutubeService {
   //     { search: params })
   //     .map(response => response.json());
   // }
-  
+
 
 }
