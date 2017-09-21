@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const postcssUrl = require('postcss-url');
 const cssnano = require('cssnano');
-const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
+const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin, HashedModuleIdsPlugin } = require('webpack');
 const { GlobCopyWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
 const { CommonsChunkPlugin } = require('webpack').optimize;
 const { AotPlugin } = require('@ngtools/webpack');
@@ -57,10 +57,6 @@ const postcssPlugins = function () {
   ].concat(minimizeCss ? [cssnano(minimizeOptions)] : []);
 };
 
-
-
-
-
 const config = {
   "resolve": {
     "extensions": [
@@ -93,8 +89,8 @@ const config = {
   },
   "output": {
     "path": path.join(process.cwd(), "dist"),
-    "filename": "[name].bundle.js",
-    "chunkFilename": "[id].chunk.js"
+    "filename": "[name].[chunkhash].bundle.js",
+    "chunkFilename": "[id].[chunkhash].chunk.js"
   },
   "module": {
     "rules": [
@@ -359,7 +355,14 @@ const config = {
       {
         "test": /\.ts$/,
         "loader": "@ngtools/webpack"
-      }
+      },
+      // {
+      //   test: /\.ts/,
+      //   include: path.resolve(__dirname, 'src', 'app'),
+      //   loader: 'istanbul-instrumenter-loader',
+      //   enforce: 'post',
+      //   exclude: /(testing|node_modules|\.spec\.ts$)/
+      // },
     ]
   },
   "plugins": [
@@ -405,6 +408,7 @@ const config = {
       }
     }),
     new BaseHrefWebpackPlugin({}),
+    new HashedModuleIdsPlugin(),
     new CommonsChunkPlugin({
       "minChunks": 2,
       "async": "common"
@@ -428,6 +432,9 @@ const config = {
       "chunks": [
         "main"
       ]
+    }),
+    new CommonsChunkPlugin({
+      "name": 'runtime'
     }),
     new SourceMapDevToolPlugin({
       "filename": "[file].map[query]",
@@ -485,7 +492,7 @@ module.exports = function (env) {
       //     /vendor.bundle.js/
       //   ]
       // })
-       new MinifyPlugin()
+      new MinifyPlugin()
     )
     config.output.publicPath = '/zun';
   }

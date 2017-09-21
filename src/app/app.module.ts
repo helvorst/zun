@@ -8,7 +8,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '@angular/material';
 import 'rxjs/Rx';
-
 import { AppComponent } from './app.component';
 import { VideoComponent } from './youtube/video/video.component';
 import { PlayerComponent } from './youtube/player/player.component';

@@ -65,7 +65,7 @@ describe('PlaylistLookupComponent', () => {
     const spyRouter = spyOn(router, 'navigate');
     const spyPlayerSrv = spyOn(srv, 'setPlaylist');
     fixture.detectChanges();
-    const playlists = fixture.debugElement.queryAll(By.css('.channel-playlist'));
+    const playlists = fixture.debugElement.queryAll(By.css('.channel-playlist-card'));
     const firstplaylist = playlists[0];
     click(firstplaylist);//.triggerEventHandler('click', null);
     expect(spyRouter.calls.count()).toBe(1, 'router  was called once');

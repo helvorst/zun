@@ -1,6 +1,8 @@
 <div class="channel-playlists">
   <div class="channel-playlist" *ngFor="let playlist of playerSrv.currentChannelPlaylists">
-      <md-card  [ngClass]="{'active': playlist.id==playerSrv.currentPlaylist.id}" (click)="setPlaylist(playlist)">
+      <md-card class="channel-playlist-card" 
+      [ngClass]="{'active': playlist.id==playerSrv.currentPlaylist.id}" 
+      (click)="setPlaylist(playlist)">
         <img class="channel-playlist-image" src={{playlist.snippet.thumbnails.default.url}}/>
         <div class="channel-playlist-title">{{playlist.snippet.title}}</div>
         <div class="channel-playlist-items">{{playlist.contentDetails.itemCount}}</div>
