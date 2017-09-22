@@ -91,6 +91,7 @@ export class YoutubeService {
     }
     const params = this.getBaseRequestParams();
     params.set("channelId", channelId);
+    //my default playlists
     const etag = "VPWTmrH7dFmi4s1RqrK4tLejnRI/P5G4cZE0CRzQBXA1ExCbewtb6JE";
     const headers = new Headers();
     headers.append('If-None-Match', etag);

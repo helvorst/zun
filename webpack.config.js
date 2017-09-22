@@ -20,6 +20,7 @@ const entryPoints = ["inline", "polyfills", "sw-register", "styles", "vendor", "
 const minimizeCss = false;
 const baseHref = "";
 const deployUrl = "";
+const HtmlCriticalPlugin = require("html-critical-webpack-plugin");
 
 const postcssPlugins = function () {
   // safe settings based on: https://github.com/ben-eb/cssnano/issues/358#issuecomment-283696193
@@ -407,11 +408,24 @@ const config = {
         }
       }
     }),
-    new ScriptExtHtmlWebpackPlugin({
-      //inline: /inline.*/,
-      async: [/styles.*/],
-      //defaultAttribute: 'async'
-    }),
+    // new ScriptExtHtmlWebpackPlugin({
+    //   //inline: /inline.*/,
+    //   async: [/styles.*/],
+    //   //defaultAttribute: 'async'
+    // }),
+    //  new HtmlCriticalPlugin({
+    //   base: path.join(path.resolve(__dirname), 'dist/'),
+    //   src: 'index.html',
+    //   dest: 'index.html',
+    //   inline: true,
+    //   minify: true,
+    //   extract: true,
+    //   width: 375,
+    //   height: 565,
+    //   penthouse: {
+    //     blockJSRequests: false,
+    //   }
+    // }),
     new BaseHrefWebpackPlugin({}),
     new HashedModuleIdsPlugin(),
     new CommonsChunkPlugin({
@@ -456,9 +470,8 @@ const config = {
       "exclude": [],
       "tsConfigPath": "src\\tsconfig.app.json",
       "skipCodeGeneration": true,
-    })
-
-
+    }),
+   
   ],
   "node": {
     "fs": "empty",

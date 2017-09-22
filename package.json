@@ -45,6 +45,7 @@
     "cssnano": "^3.10.0",
     "exports-loader": "^0.6.3",
     "file-loader": "^0.10.0",
+    "html-critical-webpack-plugin": "^1.0.1",
     "istanbul-instrumenter-loader": "^2.0.0",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
@@ -79,6 +80,7 @@
     "url-loader": "^0.5.7",
     "webpack": "~2.4.0",
     "webpack-dev-server": "~2.4.5",
+    "webpack-plugin-critical": "^1.0.0",
     "webpack-war-plugin": "^1.0.0-beta.3"
   }
 }

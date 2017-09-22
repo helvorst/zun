@@ -5,34 +5,31 @@
     right: 0;
     left: 0;
     z-index: 10;
+    display: flex;
+    margin: 20px;
+    align-items: end;
 
-    &-main {
+    &-section {
         display: flex;
         flex-direction: column;
-        align-items: start;    
-        margin: 0 30px 0 5px;
-    }
-
-    &-player {
-        display: flex;
-        flex-direction: column;
+        //align-items: flex-end;    
+        justify-content: center;
+        margin-right: 15px;
     }
 }
 
 .zun-title {
     font-family: @font-title;
     font-size: 100px;
-    margin-right: 20px;
+    line-height: 0.7;
 }
 
 .zun-logo{
-    display: flex;
-    flex-direction: column-reverse;
-    margin: 15px;
+    //position: absolute;
 
     &__circle {
-        width: 85px;
-        height: 85px;
+        width: 100px;
+        height: 100px;
         border: 8px solid rgb(35, 34, 34);
         border-radius: 50%;
         display: block;
@@ -44,9 +41,9 @@
         height: 18px;
         background-color: rgb(35, 34, 34);
         border-radius: 50%;
-        position: fixed;
-        left: 72px;
-        top: 87px;
+        left: 49px;
+        top: -65px;
+        position: relative;
         display: block;
     }
 }

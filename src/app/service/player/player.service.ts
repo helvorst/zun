@@ -88,8 +88,8 @@ export class PlayerService {
 
   getPlayer(element: any): void {
     this.player = new YTPlayer(element, {
-      height: '350',
-      width: '600',
+      height: '300',
+      width: '300',
       autoplay: true,
       suggestedQuality: 'large',
       fs: 0,
