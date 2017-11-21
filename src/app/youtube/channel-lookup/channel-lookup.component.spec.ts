@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelLookupComponent } from './channel-lookup.component';
-import { MaterialModule } from "@angular/material";
 import { ReactiveFormsModule } from "@angular/forms/";
 import { YoutubeService } from "../../service/youtube/youtube.service";
 import { YoutubeServiceStub } from "../../service/youtube/youtube.service.stub";
@@ -16,8 +15,7 @@ describe('ChannelLookupComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ChannelLookupComponent ],
-      imports: [
-        MaterialModule, ReactiveFormsModule, BrowserAnimationsModule],
+      imports: [ReactiveFormsModule, BrowserAnimationsModule],
         providers: [{ provide: YoutubeService, useClass: YoutubeServiceStub },
           { provide: PlayerService, useClass: PlayerServiceStub }]
     })

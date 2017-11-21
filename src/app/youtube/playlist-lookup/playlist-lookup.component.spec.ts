@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlaylistLookupComponent } from './playlist-lookup.component';
-import { MaterialModule } from "@angular/material";
 import { PlayerService } from "../../service/player/player.service";
 import { PlayerServiceStub } from "../../service/player/player.service.stub";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -28,8 +27,7 @@ describe('PlaylistLookupComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PlaylistLookupComponent],
-      imports: [
-        MaterialModule, RouterTestingModule],
+      imports: [RouterTestingModule],
       providers: [{ provide: PlayerService, useClass: PlayerSrvStub },
       { provide: Router, useClass: RouterStub }]
     })

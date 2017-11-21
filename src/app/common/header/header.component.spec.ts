@@ -7,7 +7,6 @@ import { HeaderComponent } from './header.component';
 import { PlayerTitleComponent } from "../player-title/player-title.component";
 import { PlayerControlsComponent } from "../player-controls/player-controls.component";
 import { NavbarComponent } from "../navbar/navbar.component";
-import { MaterialModule } from "@angular/material";
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -22,7 +21,6 @@ describe('HeaderComponent', () => {
         PlayerTitleComponent
       ],
        imports: [
-        MaterialModule
        ]
     })
       .overrideComponent(HeaderComponent, {

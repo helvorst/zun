@@ -8,9 +8,7 @@ import { HeaderComponent } from './common/header/header.component';
 import { PlaylistComponent } from './youtube/playlist/playlist.component';
 import { PlayerComponent } from './youtube/player/player.component';
 import { TestBed, async } from '@angular/core/testing';
-
 import { AppComponent } from './app.component';
-import { MaterialModule } from '@angular/material';
 import { RouterModule } from "@angular/router";
 import { routes } from "./routes";
 import { WatchComponent } from "./pages/watch/watch.component";
@@ -45,7 +43,6 @@ describe('AppComponent', () => {
         TooltabComponent
       ],
       imports: [
-        MaterialModule,
         RouterTestingModule.withRoutes(routes),
         ReactiveFormsModule,
         BrowserAnimationsModule

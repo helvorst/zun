@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchComponent } from './search.component';
 import { ChannelLookupComponent } from "../../youtube/channel-lookup/channel-lookup.component";
 import { PlaylistLookupComponent } from "../../youtube/playlist-lookup/playlist-lookup.component";
-import { MaterialModule } from "@angular/material";
 import { ReactiveFormsModule } from "@angular/forms";
 import { PlayerService } from "../../service/player/player.service";
 import { PlayerServiceStub } from "../../service/player/player.service.stub";
@@ -31,7 +30,7 @@ describe('SearchComponent', () => {
         PlayerComponent,
         TooltabComponent,
         VisualisationComponent],
-      imports: [MaterialModule, ReactiveFormsModule, BrowserAnimationsModule, RouterTestingModule.withRoutes(routes)],
+      imports: [ ReactiveFormsModule, BrowserAnimationsModule, RouterTestingModule.withRoutes(routes)],
       providers: [{ provide: YoutubeService, useClass: YoutubeServiceStub },
       { provide: PlayerService, useClass: PlayerServiceStub }]
     })

@@ -1,3 +1,5 @@
+@import '../../../styles.variables.less';
+
 .channel-playlists {
     display: flex;
     flex-wrap: wrap;
@@ -15,11 +17,12 @@
 
     &-title {
         word-wrap: break-word;
+        font-family: @font-video;
     }
     &-items {
         font-size: 10px;
     }
-    & md-card {
+    & mat-card {
         height: 100%;
     }
 } 

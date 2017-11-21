@@ -1,38 +1,38 @@
 <div class="channel-lookup">
 
   <div class="channel-search">
-    <md-input-container>
-      <input mdInput placeholder="Channel name" [formControl]="term" (focus)="startSearch=true">
-    </md-input-container>
+    <mat-form-field class='input-fullwidth'>
+      <input matInput placeholder="Channel name" [formControl]="term" (focus)="startSearch=true">
+    </mat-form-field>
 
     <div class="channel-suggestions" *ngIf="startSearch">
       <div *ngFor="let channel of channels | async">
-        <md-card class="channel-suggestion" (click)="setChannel(channel)">
-          <md-card-header>
+        <mat-card class="channel-suggestion" (click)="setChannel(channel)">
+          <mat-card-header>
             <img md-card-avatar class="channel-suggestion-image" src={{channel.snippet.thumbnails.default.url}}/>
-            <div>{{channel.snippet.title}}</div>
-          </md-card-header>
-          <md-card-content>
+            <div class="channel-suggestion-title">{{channel.snippet.title}}</div>
+          </mat-card-header>
+          <mat-card-content>
             <p class="channel-suggestion-description">
               {{channel.snippet.description}}
             </p>
-          </md-card-content>
-        </md-card>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </div>
 
   <div class="channel-selected" *ngIf="playerSrv.currentChannel">
-    <md-card class="channel-suggestion">
-          <md-card-header>
+    <mat-card class="channel-suggestion">
+          <mat-card-header>
             <img md-card-avatar class="channel-suggestion-image" src={{playerSrv.currentChannel.snippet.thumbnails.default.url}}/>
-            <div>{{playerSrv.currentChannel?.snippet.title}}</div>
-          </md-card-header>
-          <md-card-content>
+            <div class="channel-suggestion-title">{{playerSrv.currentChannel?.snippet.title}}</div>
+          </mat-card-header>
+          <mat-card-content>
             <p class="channel-suggestion-description">
               {{playerSrv.currentChannel?.snippet.description}}
             </p>
-          </md-card-content>
-        </md-card>
+          </mat-card-content>
+      </mat-card>
   </div>
 </div>

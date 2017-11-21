@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlayerControlsComponent } from './player-controls.component';
-import { MaterialModule } from "@angular/material";
 import { PlayerService } from "../../service/player/player.service";
 import { PlayerServiceStub } from "../../service/player/player.service.stub";
 
@@ -12,7 +11,6 @@ describe('PlayerControlsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PlayerControlsComponent ],
-      imports: [MaterialModule],
       providers: [{ provide: PlayerService, useClass: PlayerServiceStub }]
     })
     .compileComponents();

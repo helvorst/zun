@@ -106,13 +106,12 @@ export class YoutubeService {
 
   getInfoOfPlaylist(playlistId): Observable<any> {
     const params = this.getBaseRequestParams();
-    params.set("type", "playlist");
-    params.set('q', playlistId);
+    params.set('id', playlistId);
     params.set('part', 'snippet');
-    return this.http.get(this.baseUrl + 'search',
+    return this.http.get(this.baseUrl + 'playlists',
       { search: params })
       .map(response => response.json().items.map(item => {
-        item.id = item.id.playlistId;
+        item.id = item.id;
         return item;
       }));
   }

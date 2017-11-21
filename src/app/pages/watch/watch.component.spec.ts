@@ -4,7 +4,6 @@ import { WatchComponent } from './watch.component';
 import { PlayerComponent } from "../../youtube/player/player.component";
 import { TooltabComponent } from "../../common/tooltab/tooltab.component";
 import { VisualisationComponent } from "../../visualisation/visualisation.component";
-import { MaterialModule } from "@angular/material";
 import { PlayerService } from "../../service/player/player.service";
 import { PlayerServiceStub } from "../../service/player/player.service.stub";
 import { YoutubeService } from "../../service/youtube/youtube.service";
@@ -21,7 +20,7 @@ describe('WatchComponent', () => {
         PlayerComponent,
         TooltabComponent,
         VisualisationComponent],
-      imports: [MaterialModule, BrowserAnimationsModule],
+      imports: [BrowserAnimationsModule],
        providers: [{ provide: YoutubeService, useClass: YoutubeServiceStub },
           { provide: PlayerService, useClass: PlayerServiceStub }]
     })

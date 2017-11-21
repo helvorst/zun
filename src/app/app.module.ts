@@ -6,7 +6,6 @@ import { YoutubeService } from './service/youtube/youtube.service';
 import { PlayerService } from './service/player/player.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '@angular/material';
 import 'rxjs/Rx';
 import { AppComponent } from './app.component';
 import { VideoComponent } from './youtube/video/video.component';
@@ -27,7 +26,11 @@ import { IsPlaylistLoadedService } from "./service/is-playlist-loaded/is-playlis
 import { IsChannelLoadedService } from "./service/is-channel-loaded/is-channel-loaded.service";
 import { TooltabComponent } from './common/tooltab/tooltab.component';
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
-
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatInputModule} from '@angular/material/input';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -53,9 +56,13 @@ import { HashLocationStrategy, LocationStrategy } from "@angular/common";
     ),
     BrowserModule,
     HttpModule,
-    MaterialModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule 
+    BrowserAnimationsModule,
+    MatSidenavModule,
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [
     YoutubeService,

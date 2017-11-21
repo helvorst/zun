@@ -1,11 +1,11 @@
 
-<md-sidenav-container  class="page-sidenav">
-  <md-sidenav #sidenav mode="push" opened="false"  class="page-sidenav__sidebar" md-disable-backdrop>
+<mat-sidenav-container  class="page-sidenav">
+  <mat-sidenav #sidenav mode="push" opened="false"  class="page-sidenav__sidebar" >
    <app-playlist></app-playlist>
-  </md-sidenav>
+  </mat-sidenav>
   
   <div class="page-sidenav__content">
     <app-header [sidenavControl]="sidenav"></app-header> 
     <router-outlet></router-outlet>
   </div>
-</md-sidenav-container>
+</mat-sidenav-container>
