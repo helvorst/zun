@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlayerControlsComponent } from './player-controls.component';
 import { PlayerService } from "../../service/player/player.service";
 import { PlayerServiceStub } from "../../service/player/player.service.stub";
+import { MaterialModule } from '../../material.module';
 
 describe('PlayerControlsComponent', () => {
   let component: PlayerControlsComponent;
@@ -11,7 +12,10 @@ describe('PlayerControlsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PlayerControlsComponent ],
-      providers: [{ provide: PlayerService, useClass: PlayerServiceStub }]
+      providers: [{ provide: PlayerService, useClass: PlayerServiceStub }],
+      imports: [
+        MaterialModule
+       ]
     })
     .compileComponents();
   }));

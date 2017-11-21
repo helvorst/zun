@@ -10,6 +10,7 @@ import { By } from '@angular/platform-browser';
 import { data } from "../../testing/data";
 import { Router } from "@angular/router";
 import { click } from "../../testing/click";
+import { MaterialModule } from '../../material.module';
 class RouterStub {
   navigate(url: any):any { 
     return url; 
@@ -27,7 +28,7 @@ describe('PlaylistLookupComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PlaylistLookupComponent],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, MaterialModule],
       providers: [{ provide: PlayerService, useClass: PlayerSrvStub },
       { provide: Router, useClass: RouterStub }]
     })

@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --port=4200",
     "build": "webpack",
     "build:prod": "webpack --env.type prod",
-    "test": "karma start --single-run --code-coverage ./karma.conf.js",
+    "test": "karma start --code-coverage ./karma.conf.js",
     "test:prod": "karma start  --single-run --browsers ChromeHeadless ./karma.conf.js",
     "lint": "ng lint",
     "e2e": "protractor ./protractor.conf.js",

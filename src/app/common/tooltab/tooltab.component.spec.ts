@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TooltabComponent } from './tooltab.component';
 import { VisualisationComponent } from "../../visualisation/visualisation.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MaterialModule } from '../../material.module';
 
 describe('TooltabComponent', () => {
   let component: TooltabComponent;
@@ -12,7 +13,7 @@ describe('TooltabComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TooltabComponent,
       VisualisationComponent ],
-      imports: [ BrowserAnimationsModule],
+      imports: [ BrowserAnimationsModule, MaterialModule],
     })
     .compileComponents();
   }));

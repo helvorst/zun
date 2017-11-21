@@ -22,6 +22,7 @@ import { TooltabComponent } from "./common/tooltab/tooltab.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MaterialModule } from './material.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -45,7 +46,8 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule.withRoutes(routes),
         ReactiveFormsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MaterialModule
       ],
     })
       .overrideComponent(AppComponent, {

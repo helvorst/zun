@@ -26,11 +26,8 @@ import { IsPlaylistLoadedService } from "./service/is-playlist-loaded/is-playlis
 import { IsChannelLoadedService } from "./service/is-channel-loaded/is-channel-loaded.service";
 import { TooltabComponent } from './common/tooltab/tooltab.component';
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatInputModule} from '@angular/material/input';
-import {MatCardModule} from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MaterialModule } from './material.module';
+
 
 @NgModule({
   declarations: [
@@ -58,11 +55,7 @@ import {MatIconModule} from '@angular/material/icon';
     HttpModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatSidenavModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule
+    MaterialModule
   ],
   providers: [
     YoutubeService,

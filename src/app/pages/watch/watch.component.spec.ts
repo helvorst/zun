@@ -9,6 +9,8 @@ import { PlayerServiceStub } from "../../service/player/player.service.stub";
 import { YoutubeService } from "../../service/youtube/youtube.service";
 import { YoutubeServiceStub } from "../../service/youtube/youtube.service.stub";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { PlayerControlsComponent } from '../../common/player-controls/player-controls.component';
+import { MaterialModule } from '../../material.module';
 
 describe('WatchComponent', () => {
   let component: WatchComponent;
@@ -19,8 +21,10 @@ describe('WatchComponent', () => {
       declarations: [WatchComponent,
         PlayerComponent,
         TooltabComponent,
-        VisualisationComponent],
-      imports: [BrowserAnimationsModule],
+        VisualisationComponent,
+        PlayerControlsComponent
+      ],
+      imports: [BrowserAnimationsModule, MaterialModule],
        providers: [{ provide: YoutubeService, useClass: YoutubeServiceStub },
           { provide: PlayerService, useClass: PlayerServiceStub }]
     })
