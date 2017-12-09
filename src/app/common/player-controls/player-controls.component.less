@@ -1,18 +1,17 @@
+@import '../../../styles.variables.less';
+
 .player-controls {
         display: flex;
         flex-wrap: nowrap;
         margin: 0 20px;
         flex-direction: column;
-        position: relative;
-        top: 9px;
-        left: 33px;
 
         button {
-            background-color: black;
+            background-color: @color-accent-dark;
+           // border: 2px solid blue;
         }
         
         button.active {
             background-color: blue;
-            border: 1px solid darkblue;
         }
 }

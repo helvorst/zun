@@ -27,7 +27,9 @@ import { IsChannelLoadedService } from "./service/is-channel-loaded/is-channel-l
 import { TooltabComponent } from './common/tooltab/tooltab.component';
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { MaterialModule } from './material.module';
-
+import { SpeechRecognitionComponent } from './speech-recognition/speech-recognition.component';
+import { SpeechService } from './service/speech/speech.service';
+import { HistoryComponent } from './common/history/history.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { MaterialModule } from './material.module';
     ChannelLookupComponent,
     PlaylistLookupComponent,
     PlayerTitleComponent,
-    TooltabComponent
+    TooltabComponent,
+    SpeechRecognitionComponent,
+    HistoryComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -63,6 +67,7 @@ import { MaterialModule } from './material.module';
     IsWatchValidService,
     IsPlaylistLoadedService,
     IsChannelLoadedService,
+    SpeechService,
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]

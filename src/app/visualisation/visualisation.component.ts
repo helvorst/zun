@@ -6,69 +6,64 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./visualisation.component.less']
 })
 export class VisualisationComponent implements OnInit {
-
-  @ViewChild('viz') vizElement;
+  canvas: any;
+  HEIGHT: number;
+  WIDTH: number;
+  @ViewChild('fft') vizElement;
+  canvasCtx: any;
+  analyser: any;
+  barWidthCoefficient = 1.2;
 
   constructor() { }
 
   ngOnInit() {
+    
+    const fftSize = 128;
+    this.WIDTH = this.vizElement.nativeElement.clientWidth - 15; //15 - padding
+    this.HEIGHT = this.vizElement.nativeElement.clientHeight - 30; //30 from bottom
+    this.canvas = document.getElementById('canvas');
+    this.canvasCtx = this.canvas.getContext('2d');
+    this.setCanvasSilze();
 
-    setTimeout(() => {
-      const audioCtx = new ((window as any).AudioContext)();
-      const analyser = audioCtx.createAnalyser();
-      const WIDTH = this.vizElement.nativeElement.clientWidth;
-      const HEIGHT = this.vizElement.nativeElement.clientHeight;
-      const canvas: any = document.getElementById('canvas');
-      canvas.setAttribute('width', WIDTH-5);
-      canvas.setAttribute('height', HEIGHT-5);
-      var canvasCtx = canvas.getContext('2d');
-      navigator.mediaDevices.getUserMedia({ video: false, audio: true })
-        .then((stream) => {
-          var source = audioCtx.createMediaStreamSource(stream);
-          source.connect(analyser);
-          analyser.fftSize = 256;
-          analyser.minDecibels = -135;
-          var bufferLength = analyser.frequencyBinCount;
-          console.log(bufferLength);
-          var dataArray = new Uint8Array(bufferLength);
+    const audioCtx = new ((window as any).AudioContext)();
+    this.analyser = audioCtx.createAnalyser();
+    this.analyser.fftSize = fftSize;
+    this.analyser.minDecibels = -114;
 
-          canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
-          function draw() {
-            var drawVisual = requestAnimationFrame(draw);
-
-            analyser.getByteFrequencyData(dataArray);
-
-            canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-            canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-            var barWidth = (WIDTH / bufferLength / 1.5);
-            var barHeight;
-            var x = 0;
-
-            for (var i = 0; i < bufferLength; i++) {
-              barHeight = dataArray[i];
-              const redI = i < 43 ? 2 : 0.5;
-              const greenI = i > 43 && i < 86 ? 2 : 0.5;
-              const blueI = i > 86 ? 2 : 0.5;
-              const colors = [barHeight * redI, barHeight * greenI, barHeight * blueI];
-              //console.log(colors.join(','))
-              canvasCtx.fillStyle = 'rgb(' + colors.join(',') + ')';
-              canvasCtx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight);
-
-              x += (barWidth + 1) * 1.5;
-            }
-          };
-          draw();
-
-        })
-        .catch(function (err) {
-          console.log("An error occured! " + err);
-        });
-    }, 1000)
-
-
-
-
+    navigator.mediaDevices.getUserMedia({ video: false, audio: true })
+      .then((stream) => {
+        const source = audioCtx.createMediaStreamSource(stream);
+        source.connect(this.analyser);
+        this.draw.call(this);
+      })
+      .catch(function (err) {
+        console.log("An error occured! Can't get audio stream" + err);
+      });
   }
+
+  setCanvasSilze(): void {   
+    this.canvas.setAttribute('width', this.WIDTH);
+    this.canvas.setAttribute('height', this.HEIGHT);
+  }
+
+  draw(): void {
+    const bufferLength = this.analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    var drawVisual = requestAnimationFrame(this.draw.bind(this));
+    this.analyser.getByteFrequencyData(dataArray); 
+    this.canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+    this.canvasCtx.fillRect(0, 0, this.WIDTH, this.HEIGHT);        
+    const barWidth = (this.WIDTH / bufferLength / this.barWidthCoefficient);
+    let barHeight;
+    let x = 0;
+    for (let i = 0; i < bufferLength; i++) {
+      barHeight = dataArray[i];         
+      this.canvasCtx.fillStyle = 'rgb(0, 0, 230)';
+      this.canvasCtx.fillRect(x, this.HEIGHT - barHeight, barWidth, barHeight);
+
+      x += barWidth * this.barWidthCoefficient;
+    }
+  };
 
 }
 

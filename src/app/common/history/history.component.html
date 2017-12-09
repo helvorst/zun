@@ -1,0 +1,3 @@
+<div [ngClass]="{'history': true, 'history--active': i==0}" *ngFor='let record of playerHistory.reverse(); let i=index'>
+  #{{playerHistory.length - i}} at {{record.when | date:'mediumTime'}} - {{record.what.snippet.title}}
+</div>

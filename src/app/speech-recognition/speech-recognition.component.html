@@ -1,0 +1,7 @@
+<button mat-fab (click)='listen()' class='mic-off' *ngIf='!isListening'>
+    <mat-icon>mic_off</mat-icon>
+</button>
+
+<button mat-fab (click)='unlisten()' class='mic-on' *ngIf='isListening'>
+    <mat-icon>mic</mat-icon>
+</button>

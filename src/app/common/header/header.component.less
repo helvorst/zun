@@ -1,20 +1,27 @@
 @import '../../../styles.variables.less';
 .header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
     z-index: 10;
     display: flex;
-    margin: 20px;
+    height: 100px;
     align-items: end;
+    flex-direction: column;
+
+    &-line {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+    }
 
     &-section {
         display: flex;
-        flex-direction: column;
-        //align-items: flex-end;    
+        flex-direction: column;   
         justify-content: center;
         margin-right: 15px;
+    }
+
+    &-section--stretch {
+        flex-grow: 1;
     }
 }
 
@@ -25,24 +32,25 @@
 }
 
 .zun-logo{
-    //position: absolute;
+    margin: 10px;
 
     &__circle {
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
         border: 8px solid rgb(35, 34, 34);
         border-radius: 50%;
         display: block;
         background-color: white;
-        //animation: pulse 1s infinite;
+        position: relative;
+        top: 36px;
     }
      &__dot {
         width: 18px;
         height: 18px;
         background-color: rgb(35, 34, 34);
         border-radius: 50%;
-        left: 49px;
-        top: -65px;
+        left: 58px;
+        top: -40px;
         position: relative;
         display: block;
     }

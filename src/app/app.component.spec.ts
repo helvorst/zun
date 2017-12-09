@@ -23,6 +23,10 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from './material.module';
+import { SpeechRecognitionComponent } from './speech-recognition/speech-recognition.component';
+import { HistoryComponent } from './common/history/history.component';
+import { SpeechService } from './service/speech/speech.service';
+import { SpeechServiceStub } from './service/speech/speech.service.stub';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -41,7 +45,9 @@ describe('AppComponent', () => {
         ChannelLookupComponent,
         PlaylistLookupComponent,
         PlayerTitleComponent,
-        TooltabComponent
+        TooltabComponent,
+        SpeechRecognitionComponent,
+        HistoryComponent
       ],
       imports: [
         RouterTestingModule.withRoutes(routes),
@@ -53,7 +59,8 @@ describe('AppComponent', () => {
       .overrideComponent(AppComponent, {
         set: {
           providers: [{ provide: YoutubeService, useClass: YoutubeServiceStub },
-          { provide: PlayerService, useClass: PlayerServiceStub }]
+          { provide: PlayerService, useClass: PlayerServiceStub },
+          {provide: SpeechService, useClass: SpeechServiceStub}]
         }
       })
       .compileComponents();

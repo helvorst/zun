@@ -8,6 +8,9 @@ import { PlayerTitleComponent } from "../player-title/player-title.component";
 import { PlayerControlsComponent } from "../player-controls/player-controls.component";
 import { NavbarComponent } from "../navbar/navbar.component";
 import { MaterialModule } from '../../material.module';
+import { SpeechRecognitionComponent } from '../../speech-recognition/speech-recognition.component';
+import { SpeechService } from '../../service/speech/speech.service';
+import { SpeechServiceStub } from '../../service/speech/speech.service.stub';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -19,7 +22,8 @@ describe('HeaderComponent', () => {
         HeaderComponent,
         NavbarComponent,
         PlayerControlsComponent,
-        PlayerTitleComponent
+        PlayerTitleComponent,
+        SpeechRecognitionComponent
       ],
        imports: [
         MaterialModule
@@ -27,7 +31,8 @@ describe('HeaderComponent', () => {
     })
       .overrideComponent(HeaderComponent, {
         set: {
-          providers: [{ provide: PlayerService, useClass: PlayerServiceStub }]
+          providers: [{ provide: PlayerService, useClass: PlayerServiceStub }, 
+            {provide: SpeechService, useClass: SpeechServiceStub}]
         }
       })
       .compileComponents();

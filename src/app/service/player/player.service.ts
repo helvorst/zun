@@ -15,7 +15,7 @@ export class PlayerService {
   public currentVideo;
   public currentVideoIndex;
   public currentVideoObservable = new Subject();
-  private history = [];
+  public history = [];
   public playerState = {
     isStopped: false,
     isLooped: false,
@@ -118,31 +118,31 @@ export class PlayerService {
     this.currentVideo = video;
     this.currentVideoIndex = this.getVideoIndex(this.currentVideo);
     this.currentVideoObservable.next(this.currentVideo);
-    if (this.player)
+    if (this.player) {
       this.player.load(video.contentDetails.videoId);
+      if(!this.history[this.history.length - 1] || this.history[this.history.length - 1].what!=video) {
+        this.history.push({what: video, when: new Date});
+      }
+    }
   }
 
   switchTo(step?: number): void {
-    let targetVideo;
+    let targetVideo; 
+    let shuffledIndex = 0;
     if (this.playerState.isLooped && !step) {
       targetVideo = this.currentVideo;
-    } else if (this.playerState.isShuffled) {
-      let shuffledIndex = 0;
+    } else if (this.playerState.isShuffled) {   
       if (step == 1) {
         shuffledIndex = this.getShuffledIndex();
+        targetVideo = this.currentPlaylistItems[shuffledIndex];
       } else if (step == -1) {
-        this.history.pop();
-        shuffledIndex = this.history.pop();
+        const currentIndex = this.history.pop(); // pop oiut the current
+        targetVideo = this.history[this.history.length - 1].what;
       }
-      targetVideo = this.currentPlaylistItems[shuffledIndex];
-      this.history.push(shuffledIndex);
     } else if (step != null) {
       const currentIndex = this.getVideoIndex(this.currentVideo);
       const nextIndex = currentIndex + step;
       targetVideo = this.currentPlaylistItems[nextIndex];
-      if (step == 1) {
-        this.history.push(nextIndex)
-      }
     }
     this.play(targetVideo);
   }

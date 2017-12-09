@@ -1,22 +1,31 @@
 <div class="header">
 
-  <div class="header-section">
-    <div class="zun-logo" (click)="logoControl()">
-      <span class="zun-logo__circle" [ngClass]="{'pulse' : isPlaying}"></span>
-      <span class="zun-logo__dot"></span>
+  <div class='header-line'>
+
+    <div class="header-section">
+      <div class="zun-logo" (click)="logoControl()">
+        <span class="zun-logo__circle" [ngClass]="{'pulse' : isPlaying}"></span>
+        <span class="zun-logo__dot"></span>
+      </div>
     </div>
+
+    <div class="header-section">
+      <div class="zun-title">Zun</div>
+
+    </div>
+
+    <div class="header-section">
+      <app-speech-recognition></app-speech-recognition>
+    </div>
+
+    <div class="header-section header-section--stretch">
+      <app-player-title></app-player-title>
+    </div>
+
+    <div class="header-section">
+      <app-navbar></app-navbar>
+    </div>
+
   </div>
 
-
-  <div class="header-section">
-    <app-navbar></app-navbar>
-    <div class="zun-title">Zun</div>
-    <app-player-title></app-player-title>
-  </div>
 </div>
-
-<!-- <div class='header'>
-  <div class="header-section">
-
-  </div>
-</div> -->

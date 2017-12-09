@@ -18,6 +18,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from '../../material.module';
 import { PlayerControlsComponent } from '../../common/player-controls/player-controls.component';
+import { HistoryComponent } from '../../common/history/history.component';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -32,8 +33,10 @@ describe('SearchComponent', () => {
         PlayerComponent,
         TooltabComponent,
         VisualisationComponent,
-      PlayerControlsComponent],
-      imports: [ ReactiveFormsModule, BrowserAnimationsModule, RouterTestingModule.withRoutes(routes), MaterialModule],
+        PlayerControlsComponent,
+        HistoryComponent
+      ],
+      imports: [ReactiveFormsModule, BrowserAnimationsModule, RouterTestingModule.withRoutes(routes), MaterialModule],
       providers: [{ provide: YoutubeService, useClass: YoutubeServiceStub },
       { provide: PlayerService, useClass: PlayerServiceStub }]
     })
