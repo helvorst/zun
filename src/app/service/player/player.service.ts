@@ -97,7 +97,7 @@ export class PlayerService {
       enablejsapi: 1,
     });
     this.player.on('ended', () => {
-      this.switchTo(1);
+      this.switchTo(100);
     })
     this.player.on('unplayable', (videoId) => {
       this.switchTo(1);
@@ -109,7 +109,7 @@ export class PlayerService {
   }
 
   getShuffledIndex(): number {
-    const size = this.currentPlaylistItems.length;
+    const size = this.currentPlaylistItems.length-1;
     const random = Math.ceil(Math.random() * size);
     return random;
   }
@@ -129,7 +129,7 @@ export class PlayerService {
   switchTo(step?: number): void {
     let targetVideo; 
     let shuffledIndex = 0;
-    if (this.playerState.isLooped && !step) {
+    if (this.playerState.isLooped && step===100) { //100 - on('ended') fired
       targetVideo = this.currentVideo;
     } else if (this.playerState.isShuffled) {   
       if (step == 1) {
