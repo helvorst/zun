@@ -1,5 +1,5 @@
 <div class="player-controls">
-  <button id="btnPrevious" mat-fab (click)="switchTo(-1)" [disabled]='playerSrv.history.length<=1' ><mat-icon>skip_previous</mat-icon></button>
+  <button id="btnPrevious" mat-fab (click)="switchTo(-1)" [disabled]='playerSrv.history.length<2 ? true:null' ><mat-icon>skip_previous</mat-icon></button>
   <button id="btnPlayStop" mat-fab (click)="playStop()"><mat-icon>{{playerSrv.playerState.isStopped ? 'play_arrow' : 'stop'}}</mat-icon></button>
   <button id="btnNext" mat-fab (click)="switchTo(1)"><mat-icon>skip_next</mat-icon></button>
   <button id="btnLoop" mat-fab (click)="setLoop()" [ngClass]="{'active': playerSrv.playerState.isLooped}"><mat-icon>repeat_one</mat-icon></button>

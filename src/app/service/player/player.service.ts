@@ -132,7 +132,7 @@ export class PlayerService {
     if (this.playerState.isLooped && step===100) { //100 - on('ended') fired
       targetVideo = this.currentVideo;
     } else if (this.playerState.isShuffled) {   
-      if (step == 1) {
+      if (step > 0) {
         shuffledIndex = this.getShuffledIndex();
         targetVideo = this.currentPlaylistItems[shuffledIndex];
       } else if (step == -1) {

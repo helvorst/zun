@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlayerControlsComponent implements OnInit {
 
-  constructor(private playerSrv: PlayerService) { }
+  constructor(public playerSrv: PlayerService) { }
 
   ngOnInit() {
   }
