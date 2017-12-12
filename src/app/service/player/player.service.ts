@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 declare var YT;
 import * as YTPlayer from 'yt-player';
+import { Router } from '@angular/router';
+
 
 
 @Injectable()
@@ -26,32 +28,15 @@ export class PlayerService {
   //TODO get rid of
   public videoEnded = this.switchTo;
 
-  constructor(private ytSrv: YoutubeService) {
-
-  }
+  constructor(
+    private ytSrv: YoutubeService,
+    private router: Router) { }
 
   getDefaultChannel(): Observable<any> {
-    return this.ytSrv.getChannelByName('helvorst')
-      .flatMap(defaultChannels => {
-        return this.setChannel(defaultChannels[0]);
-      });
+    return this.ytSrv.getChannelByName('helvorst');
   }
 
-  getPresetChannel(playlistId): Observable<any> {
-    return this.ytSrv.getInfoOfPlaylist(playlistId)
-      .flatMap(foundPlaylists => {
-        this.currentPlaylist = foundPlaylists[0];
-        const targetChannelId = this.currentPlaylist.snippet.channelId;
-        const targetchannelTitle = this.currentPlaylist.snippet.channelTitle;
-        return this.ytSrv.getChannelByName(targetchannelTitle)
-        .flatMap(channels => {
-          return this.setChannel(channels[0]);
-        })
-      });
-  }
-
-
-  setChannel(channel) {
+  setChannel(channel): Subject<boolean> {
     const ready = new Subject<boolean>();
     if (!this.currentChannel || this.currentChannel.id != channel.id) {
       this.currentChannelPlaylists = [];
@@ -63,27 +48,31 @@ export class PlayerService {
           this.currentChannelPlaylists = playlists;
           if (!this.currentPlaylist) {
             this.currentPlaylist = playlists[0];
+            const videoIndex = this.getShuffledIndex();
+            this.currentVideo = this.currentPlaylist[videoIndex];
           }
           ready.next(true);
         })
     } else {
-      setTimeout(() => ready.next(true), 100);
+      ready.next(true);
     }
     return ready;
   }
 
-  setPlaylist(playlist): void {
+  setPlaylist(playlist): Subject<boolean> {
+    const ready = new Subject<boolean>();
     if (!this.currentPlaylistItems.length || this.currentPlaylist.id != playlist.id) {
       this.currentPlaylist = playlist;
       this.ytSrv.getPlaylistItems(playlist.id)
         .subscribe(playlistItems => {
           this.currentPlaylistItems = playlistItems;
-          var random = this.getShuffledIndex();
-          this.play(this.currentPlaylistItems[random]);
+          this.currentVideo = this.currentPlaylistItems[0];
+          ready.next(true);
         });
     } else {
-      setTimeout(() => this.play(this.currentVideo), 500);
+      ready.next();
     }
+    return ready;
   }
 
   getPlayer(element: any): void {
@@ -100,8 +89,9 @@ export class PlayerService {
       this.switchTo(100);
     })
     this.player.on('unplayable', (videoId) => {
-      this.switchTo(1);
+      this.switchTo(100);
     })
+    //`player.on('unplayable', (videoId) => {})`
   }
 
   getVideoIndex(targetVideo): number {
@@ -109,29 +99,30 @@ export class PlayerService {
   }
 
   getShuffledIndex(): number {
-    const size = this.currentPlaylistItems.length-1;
+    const size = this.currentPlaylistItems.length - 1;
     const random = Math.ceil(Math.random() * size);
     return random;
   }
 
-  play(video): void {
-    this.currentVideo = video;
+  play(videoId): void {
+    const foundVideos = this.currentPlaylistItems.filter(video => video.id === videoId);
+    this.currentVideo = foundVideos[0];
     this.currentVideoIndex = this.getVideoIndex(this.currentVideo);
     this.currentVideoObservable.next(this.currentVideo);
     if (this.player) {
-      this.player.load(video.contentDetails.videoId);
-      if(!this.history[this.history.length - 1] || this.history[this.history.length - 1].what!=video) {
-        this.history.push({what: video, when: new Date});
+      this.player.load(videoId);
+      if (!this.history[this.history.length - 1] || this.history[this.history.length - 1].what != this.currentVideo) {
+        this.history.push({ what: this.currentVideo, when: new Date });
       }
     }
   }
 
   switchTo(step?: number): void {
-    let targetVideo; 
+    let targetVideo;
     let shuffledIndex = 0;
-    if (this.playerState.isLooped && step===100) { //100 - on('ended') fired
+    if (this.playerState.isLooped && step === 100) { //100 - on('ended') fired
       targetVideo = this.currentVideo;
-    } else if (this.playerState.isShuffled) {   
+    } else if (this.playerState.isShuffled) {
       if (step > 0) {
         shuffledIndex = this.getShuffledIndex();
         targetVideo = this.currentPlaylistItems[shuffledIndex];
@@ -144,7 +135,11 @@ export class PlayerService {
       const nextIndex = currentIndex + step;
       targetVideo = this.currentPlaylistItems[nextIndex];
     }
-    this.play(targetVideo);
+    //this.currentVideo = targetVideo;
+    this.router.navigate(['/watch',
+      this.currentChannel.id,
+      this.currentPlaylist.id,
+      targetVideo.id]);
   }
 
   setState(state): void {

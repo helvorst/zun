@@ -4,11 +4,13 @@ import { YoutubeService } from '../youtube/youtube.service';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { PlayerService } from './player.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PlayerService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [PlayerService, {provide: YoutubeService, useClass: YoutubeServiceStub}]
+      providers: [PlayerService, {provide: YoutubeService, useClass: YoutubeServiceStub}],
+      imports: [RouterTestingModule]
     })
     // .overrideComponent(PlayerService, {
     //   set: {

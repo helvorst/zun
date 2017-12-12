@@ -29,8 +29,7 @@ export class YoutubeService {
   getPlaylistItems(playlistId, nextPageToken?): Observable<any> {
     const params = this.getBaseRequestParams(nextPageToken);
     params.set('playlistId', playlistId);
-    return this.http.get(this.baseUrl + 'playlistItems',
-      { search: params })
+    return this.http.get(this.baseUrl + 'playlistItems', { search: params })
       .concatMap((response: Response) => {
         let result = response.json();
         let partialResponse = result.items;
@@ -40,7 +39,11 @@ export class YoutubeService {
           : Observable.empty();
         return Observable.concat(partialResponseObservable, nextPartialResponseObservable);
       })
-      .reduce((acc, item) => acc.concat(item), []);
+      .reduce((acc, item) => {
+        item.id = item.contentDetails ? item.contentDetails.videoId : 'noidinvideo';
+        return acc.concat(item);
+      }, [])
+      //.map(item => item.id = item.contentDetails ? item.contentDetails.videoId : 'noidinvideo');
   };
 
   //get exact name match
@@ -114,6 +117,22 @@ export class YoutubeService {
         item.id = item.id;
         return item;
       }));
+  }
+
+  getChannelById(channelId: string): Observable<any> {
+    const params = this.getBaseRequestParams();
+    params.set('id', channelId);
+    params.set('part', 'snippet');
+    return this.http.get(this.baseUrl + 'channels', { search: params })
+      .map(response => response.json());
+  }
+
+  getPlaylistById(playlistId: string): Observable<any> {
+    const params = this.getBaseRequestParams();
+    params.set('id', playlistId);
+    params.set('part', 'snippet');
+    return this.http.get(this.baseUrl + 'playlists', { search: params })
+      .map(response => response.json());
   }
 
   // getInfoOfChannel(channelId): Observable<any> {

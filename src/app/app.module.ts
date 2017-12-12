@@ -20,16 +20,16 @@ import { NavbarComponent } from "./common/navbar/navbar.component";
 import { PlayerControlsComponent } from './common/player-controls/player-controls.component';
 import { ChannelLookupComponent } from './youtube/channel-lookup/channel-lookup.component';
 import { PlaylistLookupComponent } from './youtube/playlist-lookup/playlist-lookup.component';
-import { IsWatchValidService } from "./service/is-watch-valid/is-watch-valid.service";
 import { PlayerTitleComponent } from './common/player-title/player-title.component';
 import { IsPlaylistLoadedService } from "./service/is-playlist-loaded/is-playlist-loaded.service";
-import { IsChannelLoadedService } from "./service/is-channel-loaded/is-channel-loaded.service";
 import { TooltabComponent } from './common/tooltab/tooltab.component';
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { MaterialModule } from './material.module';
 import { SpeechRecognitionComponent } from './speech-recognition/speech-recognition.component';
 import { SpeechService } from './service/speech/speech.service';
 import { HistoryComponent } from './common/history/history.component';
+import { WatchValidGuard } from './guard/watch-valid-guard/watch-valid.guard';
+import { UrlYTParamsResolver } from './route-resolver/url-params-resolver/url-params.resolver';
 
 @NgModule({
   declarations: [
@@ -64,9 +64,8 @@ import { HistoryComponent } from './common/history/history.component';
   providers: [
     YoutubeService,
     PlayerService,
-    IsWatchValidService,
-    IsPlaylistLoadedService,
-    IsChannelLoadedService,
+    WatchValidGuard,
+    UrlYTParamsResolver,
     SpeechService,
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],

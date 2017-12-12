@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { PlayerControlsComponent } from '../../common/player-controls/player-controls.component';
 import { MaterialModule } from '../../material.module';
 import { HistoryComponent } from '../../common/history/history.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('WatchComponent', () => {
   let component: WatchComponent;
@@ -26,7 +27,7 @@ describe('WatchComponent', () => {
         PlayerControlsComponent,
         HistoryComponent
       ],
-      imports: [BrowserAnimationsModule, MaterialModule],
+      imports: [BrowserAnimationsModule, MaterialModule, RouterTestingModule],
        providers: [{ provide: YoutubeService, useClass: YoutubeServiceStub },
           { provide: PlayerService, useClass: PlayerServiceStub }]
     })

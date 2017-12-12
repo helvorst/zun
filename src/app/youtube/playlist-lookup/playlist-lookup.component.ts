@@ -13,6 +13,7 @@ export class PlaylistLookupComponent implements OnInit {
   playlists;
   constructor(
     private playerSrv: PlayerService,
+    private ytService: YoutubeService,
     private router: Router) { }
 
   ngOnInit() {
@@ -20,7 +21,13 @@ export class PlaylistLookupComponent implements OnInit {
   }
 
   setPlaylist(playlist): void {
-    this.playerSrv.setPlaylist(playlist);
-    this.router.navigate(['/watch', playlist.id]);
+    this.playerSrv.currentPlaylist = playlist;
+    this.playerSrv.setPlaylist(playlist)
+      .subscribe(items => {
+        this.router.navigate(['/watch',
+          this.playerSrv.currentChannel.id,
+          this.playerSrv.currentPlaylist.id,
+          this.playerSrv.currentVideo.id]);
+      });
   }
 }

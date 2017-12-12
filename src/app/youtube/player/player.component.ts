@@ -2,6 +2,7 @@ import { PlayerService } from '../../service/player/player.service';
 import { YoutubeService } from '../../service/youtube/youtube.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable } from "rxjs";
+import { Router, NavigationEnd } from '@angular/router';
 declare var YT;
 @Component({
   selector: 'app-player',
@@ -16,24 +17,22 @@ export class PlayerComponent implements OnInit {
 
   constructor(
     private ytSrv: YoutubeService,
-    private playerSrv: PlayerService) { }
+    private playerSrv: PlayerService,
+    private router: Router) {
     
+
+    this.router.events
+      .filter(e => e instanceof NavigationEnd)
+      .subscribe((e: NavigationEnd) => {
+        const urlParams = e.urlAfterRedirects.split('/');
+        const videoId = urlParams[urlParams.length-1];
+        this.playerSrv.play(videoId);
+      });
+  }
+
   ngOnInit() {
-
-    // Observable.zip(
-    //   this.playerSrv.getPlayer(this.htmlPlayerElement.nativeElement),
-    //   this.playerSrv.currentVideoObservable.take(1),
-    //   (player, video) => [player, video]
-    // )
-    // .subscribe(values => {
-    //   this.player = values[0];
-    //   this.select(values[1]);
-    // })
-
     this.playerSrv.getPlayer('#ytplayer');
-    // if (this.playerSrv.player) {
-    //   this.playerSrv.switchTo(1);
-    // }
+    this.playerSrv.play(this.playerSrv.currentVideo.id);
   }
 
 }

@@ -4,6 +4,8 @@ import { Observable } from "rxjs/Rx";
 import { YoutubeServiceStub } from "../youtube/youtube.service.stub";
 import { Http, RequestOptions } from "@angular/http";
 import { MockBackend } from "@angular/http/testing";
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from "@angular/router";
 
 describe('PlayerService', () => {
     let playerSrv: PlayerService;
@@ -21,10 +23,11 @@ describe('PlayerService', () => {
     ];
 
     it('should set channel', (done: DoneFn) => {
-        ytSrv = new YoutubeService(new Http(new MockBackend(), new RequestOptions()));
+        const ytSrv = new YoutubeService(new Http(new MockBackend(), new RequestOptions()));
+        let router: Router;
         const spy = spyOn(ytSrv, 'getChannelPlaylists')
             .and.returnValue(Observable.of(channelPlaylists).delay(100));
-        playerSrv = new PlayerService(ytSrv);
+        playerSrv = new PlayerService(ytSrv, router);
         playerSrv.setChannel(channel)
             .subscribe(() => {
                 expect(spy.calls.count()).toBe(1, 'stubbed method was called once');
@@ -38,10 +41,11 @@ describe('PlayerService', () => {
     })
 
     it('should set playlist', () => {
-        ytSrv = new YoutubeService(new Http(new MockBackend(), new RequestOptions()));
+        const ytSrv = new YoutubeService(new Http(new MockBackend(), new RequestOptions()));
+        let router: Router;
         const spy = spyOn(ytSrv, 'getPlaylistItems')
             .and.returnValue(Observable.of(playlistVideos));
-        playerSrv = new PlayerService(ytSrv);
+        playerSrv = new PlayerService(ytSrv, router);
         playerSrv.setPlaylist(playlist);
         expect(spy.calls.count()).toBe(1, 'stubbed method was called once');
         //expect(spy.calls.mostRecent().returnValue).toBe(playlistVideos);
