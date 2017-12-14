@@ -19,9 +19,9 @@ describe('YoutubeService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should get videos', inject([YoutubeService, XHRBackend], (service: YoutubeService, mock: MockBackend) => {
+  it('should get videos with prop id set', inject([YoutubeService, XHRBackend], (service: YoutubeService, mock: MockBackend) => {
     var fakeItems = {
-      items: [{ id: 0, name: 'gaga' }]
+      items: [{ contentDetails: { videoId: 0, name: 'gaga' }}, { contentDetails: { videoId: 1, name: 'gugu' }}]
     };
     mock.connections.subscribe(connection => {
       connection.mockRespond(new Response(new ResponseOptions({
@@ -31,7 +31,7 @@ describe('YoutubeService', () => {
     service.getPlaylistItems("fakePlaylistId")
       .subscribe(result => {
         for (const i in result) {
-          expect(result[i]).toEqual(fakeItems.items[i]);
+          expect(result[i].id).toEqual(fakeItems.items[i].contentDetails.videoId);
         }
       });
   }))

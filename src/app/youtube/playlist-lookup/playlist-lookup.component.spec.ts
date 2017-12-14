@@ -28,6 +28,9 @@ class PlayerSrvStub {
   setPlaylist(playlist: any) { 
     return Observable.of(videos);
   }
+  url(url) {
+    return url;
+  }
 }
 
 
@@ -71,22 +74,38 @@ describe('PlaylistLookupComponent', () => {
     })
   }))
 
-  it('should navigate by playlist', inject([PlayerService, Router], (srv: PlayerService, router: Router) => {
+  it('should navigate by playlist', (done) => {
+    (inject([PlayerService], (srv: PlayerService) => {
     srv.currentChannelPlaylists = playlists.items;
     srv.currentPlaylist = playlists.items[0];
     srv.currentChannel = {id: 'abc'};
     srv.currentVideo = {id : videos.items[0].id};
-    const spyRouter = spyOn(router, 'navigate');
-    const spyPlayerSrv = spyOn(srv, 'setPlaylist');
+    const spySetPlaylist = spyOn(srv, 'setPlaylist');
+    const spyUrl = spyOn(srv, 'url');
     fixture.detectChanges();
     const renderedPlaylists = fixture.debugElement.queryAll(By.css('.channel-playlist-card'));
     const firstplaylist = renderedPlaylists[0];
     click(firstplaylist);//.triggerEventHandler('click', null);
-    expect(spyRouter.calls.count()).toBe(1, 'router  was called once');
-    expect(spyRouter.calls.first().args[0].join('/'))
-      .toEqual('/watch/' + [srv.currentChannel.id, srv.currentPlaylist.id, srv.currentVideo.id].join('/'), 'url is correct');
-    expect(spyPlayerSrv.calls.mostRecent().args[0]).toEqual(srv.currentChannel.id);
-    expect(spyPlayerSrv.calls.mostRecent().args[1]).toEqual(srv.currentPlaylist.id);
-    expect(spyPlayerSrv.calls.mostRecent().args[2]).toEqual(srv.currentVideo.id);
-  }))
+    expect(spySetPlaylist.calls.count()).toBe(1, 'setPlaylist was called');
+    // fixture.whenStable().then(() => { // wait for async 
+    //   fixture.detectChanges();        // update view with quote
+    //   expect(spyUrl.calls.count()).toBe(1, 'spyUrl was called');
+    //   expect(spyUrl.calls.mostRecent().args[0]).toEqual(srv.currentVideo.id);
+    // });
+   
+    spySetPlaylist.calls.mostRecent().returnValue.then(() => {
+      fixture.detectChanges(); // update view with quote
+      expect(spyUrl.calls.count()).toBe(1, 'spyUrl was called');
+      done();
+    });
+    }))()
+
+
+    // expect(spyRouter.calls.count()).toBe(1, 'router  was called once');
+    // expect(spyRouter.calls.first().args[0].join('/'))
+    //   .toEqual('/watch/' + [srv.currentChannel.id, srv.currentPlaylist.id, srv.currentVideo.id].join('/'), 'url is correct');
+    // expect(spyPlayerSrv.calls.mostRecent().args[0]).toEqual(srv.currentChannel.id);
+    // expect(spyPlayerSrv.calls.mostRecent().args[1]).toEqual(srv.currentPlaylist.id);
+    // expect(spyPlayerSrv.calls.mostRecent().args[2]).toEqual(srv.currentVideo.id);
+  })
 });

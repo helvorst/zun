@@ -7,6 +7,7 @@ import { YoutubeServiceStub } from "../../service/youtube/youtube.service.stub";
 import { YoutubeService } from "../../service/youtube/youtube.service";
 import { PlayerServiceStub } from "../../service/player/player.service.stub";
 import { PlayerService } from "../../service/player/player.service";
+import { RouterTestingModule } from '@angular/router/testing';
 
 //jasmine.describe('jh', ()=>{})
 
@@ -16,12 +17,15 @@ describe('PlayerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayerComponent ],
+      declarations: [PlayerComponent],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
-      providers: [{provide: YoutubeService, useClass: YoutubeServiceStub},
-      {provide: PlayerService, useClass: PlayerServiceStub}]
+      providers: [
+        { provide: YoutubeService, useClass: YoutubeServiceStub },
+        { provide: PlayerService, useClass: PlayerServiceStub }
+      ],
+      imports: [RouterTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
