@@ -11,8 +11,7 @@ export class PlaylistLookupComponent implements OnInit {
 
   playlists;
   constructor(
-    private playerSrv: PlayerService,
-    private ytService: YoutubeService) { }
+    private playerSrv: PlayerService) { }
 
   ngOnInit() {
 

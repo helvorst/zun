@@ -24,13 +24,13 @@ module.exports = function (config) {
     angularCli: {
       environment: 'dev'
     },
-    files: [
-      './src/**/*.ts'
-    ],
-    preprocessors: {
-      //'./src/**/*.spec.ts': ['webpack', 'sourcemap'],
-      './src/**/*.ts': ['coverage']
-    },
+    // files: [
+    //   './src/**/*.ts'
+    // ],
+    // preprocessors: {
+    //   //'./src/**/*.spec.ts': ['webpack', 'sourcemap'],
+    //   './src/**/*.ts': ['coverage']
+    // },
     reporters: ['progress', 'kjhtml', 'coverage'],
     // save interim raw coverage report in memory 
     coverageReporter: {
@@ -62,6 +62,9 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
-    singleRun: false
+    singleRun: false,
+    mime: {
+      'text/x-typescript': ['ts','tsx']
+    }
   });
 };
