@@ -7,20 +7,30 @@ import { YoutubeService } from "../../service/youtube/youtube.service";
 import { Http } from "@angular/http";
 import { inject } from "@angular/core/testing";
 import { By } from '@angular/platform-browser';
-import { data } from "../../testing/data";
+import { playlists } from "../../testing/data.playlists";
 import { Router } from "@angular/router";
 import { click } from "../../testing/click";
 import { MaterialModule } from '../../material.module';
+import { YoutubeServiceStub } from '../../service/youtube/youtube.service.stub';
+import { Observable } from 'rxjs/Observable';
+import { videos } from '../../testing/data.videos';
+
+// stubs 
 class RouterStub {
-  navigate(url: any):any { 
-    return url; 
+  navigate(url: any): any {
+    return url;
   };
 }
-
 class PlayerSrvStub {
   currentChannelPlaylists;
-  setPlaylist(playlist: any) {}
+  currentChannel;
+  currentVideo;
+  setPlaylist(playlist: any) { 
+    return Observable.of(videos);
+  }
 }
+
+
 describe('PlaylistLookupComponent', () => {
   let component: PlaylistLookupComponent;
   let fixture: ComponentFixture<PlaylistLookupComponent>;
@@ -29,8 +39,11 @@ describe('PlaylistLookupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PlaylistLookupComponent],
       imports: [RouterTestingModule, MaterialModule],
-      providers: [{ provide: PlayerService, useClass: PlayerSrvStub },
-      { provide: Router, useClass: RouterStub }]
+      providers: [
+        { provide: PlayerService, useClass: PlayerSrvStub },
+        { provide: Router, useClass: RouterStub },
+        { provide: YoutubeService, useClass: YoutubeServiceStub }
+      ]
     })
       .compileComponents();
   }));
@@ -47,29 +60,33 @@ describe('PlaylistLookupComponent', () => {
 
   it('should display channel playlists', inject([PlayerService], (srv: PlayerService) => {
     //const srv: PlayerService = fixture.debugElement.injector.get(PlayerService);
-    srv.currentChannelPlaylists = data.playlists;
-    srv.currentPlaylist = data.playlists[0];
+    srv.currentChannelPlaylists = playlists.items;
+    srv.currentPlaylist = playlists.items[0];
     fixture.detectChanges();
-    const playlists = fixture.debugElement.queryAll(By.css('.channel-playlist'));
-    expect(playlists.length).toBe(2, 'quantity');
+    const renderedPlaylists = fixture.debugElement.queryAll(By.css('.channel-playlist'));
+    expect(renderedPlaylists.length).toBe(2, 'quantity');
     const titles = fixture.debugElement.queryAll(By.css('.channel-playlist-title'));
     titles.map((title, i) => {
-      expect(title.nativeElement.textContent).toContain(data.playlists[i].snippet.title, 'correct title');
+      expect(title.nativeElement.textContent).toContain(playlists.items[i].snippet.title, 'correct title');
     })
   }))
 
   it('should navigate by playlist', inject([PlayerService, Router], (srv: PlayerService, router: Router) => {
-    srv.currentChannelPlaylists = data.playlists;
-    srv.currentPlaylist = data.playlists[0];
+    srv.currentChannelPlaylists = playlists.items;
+    srv.currentPlaylist = playlists.items[0];
+    srv.currentChannel = {id: 'abc'};
+    srv.currentVideo = {id : videos.items[0].id};
     const spyRouter = spyOn(router, 'navigate');
     const spyPlayerSrv = spyOn(srv, 'setPlaylist');
     fixture.detectChanges();
-    const playlists = fixture.debugElement.queryAll(By.css('.channel-playlist-card'));
-    const firstplaylist = playlists[0];
+    const renderedPlaylists = fixture.debugElement.queryAll(By.css('.channel-playlist-card'));
+    const firstplaylist = renderedPlaylists[0];
     click(firstplaylist);//.triggerEventHandler('click', null);
     expect(spyRouter.calls.count()).toBe(1, 'router  was called once');
     expect(spyRouter.calls.first().args[0].join('/'))
-    .toEqual('/watch/' + srv.currentPlaylist.id, 'url is correct');
-    expect(spyPlayerSrv.calls.mostRecent().args[0]).toEqual(srv.currentPlaylist);
+      .toEqual('/watch/' + [srv.currentChannel.id, srv.currentPlaylist.id, srv.currentVideo.id].join('/'), 'url is correct');
+    expect(spyPlayerSrv.calls.mostRecent().args[0]).toEqual(srv.currentChannel.id);
+    expect(spyPlayerSrv.calls.mostRecent().args[1]).toEqual(srv.currentPlaylist.id);
+    expect(spyPlayerSrv.calls.mostRecent().args[2]).toEqual(srv.currentVideo.id);
   }))
 });

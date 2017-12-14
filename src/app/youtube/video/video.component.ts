@@ -28,7 +28,7 @@ export class VideoComponent implements OnInit {
   }
 
   play(): void {
-    this.playerSrv.play(this.video);
+    this.playerSrv.url(this.video.id);
   }
 
   isActive(): boolean {

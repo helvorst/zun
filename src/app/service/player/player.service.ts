@@ -135,11 +135,14 @@ export class PlayerService {
       const nextIndex = currentIndex + step;
       targetVideo = this.currentPlaylistItems[nextIndex];
     }
-    //this.currentVideo = targetVideo;
+    this.url(targetVideo.id);
+  }
+
+  url(videoId) {
     this.router.navigate(['/watch',
-      this.currentChannel.id,
-      this.currentPlaylist.id,
-      targetVideo.id]);
+    this.currentChannel.id,
+    this.currentPlaylist.id,
+    videoId]);
   }
 
   setState(state): void {
