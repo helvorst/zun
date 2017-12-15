@@ -3,7 +3,8 @@ import { YoutubeService } from '../../service/youtube/youtube.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable } from "rxjs";
 import { Router, NavigationEnd } from '@angular/router';
-declare var YT;
+//declare var YT;
+
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
@@ -16,9 +17,9 @@ export class PlayerComponent implements OnInit {
   @ViewChild('ytplayer') htmlPlayerElement;
 
   constructor(
-    private ytSrv: YoutubeService,
     private playerSrv: PlayerService,
-    private router: Router) {
+    private router: Router
+  ) {
     
 
     this.router.events

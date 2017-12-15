@@ -67,10 +67,10 @@ export class PlayerServiceStub {
     return random;
   }
 
-  play(video): void {
-    this.currentVideo = video;
-    this.currentVideoIndex = this.getVideoIndex(this.currentVideo);
-    this.currentVideoObservable.next(this.currentVideo);
+  play(videoId): void {
+    // this.currentVideo = video;
+    // this.currentVideoIndex = this.getVideoIndex(this.currentVideo);
+    // this.currentVideoObservable.next(this.currentVideo);
   }
 
   switchTo(step?: number): void {

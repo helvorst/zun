@@ -1,15 +1,16 @@
-//import * as jasmine from 'jasmine';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PlayerComponent } from './player.component';
-import { YoutubeServiceStub } from "../../service/youtube/youtube.service.stub";
-import { YoutubeService } from "../../service/youtube/youtube.service";
-import { PlayerServiceStub } from "../../service/player/player.service.stub";
 import { PlayerService } from "../../service/player/player.service";
 import { RouterTestingModule } from '@angular/router/testing';
 
-//jasmine.describe('jh', ()=>{})
+class LocalPlayerServiceStub {
+  constructor() {
+    this.currentVideo = {id: 123};
+  }
+  currentVideo;
+  getPlayer() {}
+  play() {}
+}
 
 describe('PlayerComponent', () => {
   let component: PlayerComponent;
@@ -18,10 +19,9 @@ describe('PlayerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PlayerComponent],
-      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+      //schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
       providers: [
-        { provide: YoutubeService, useClass: YoutubeServiceStub },
-        { provide: PlayerService, useClass: PlayerServiceStub }
+        { provide: PlayerService, useClass: LocalPlayerServiceStub }
       ],
       imports: [RouterTestingModule]
     })

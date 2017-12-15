@@ -5,7 +5,6 @@ import { PlayerComponent } from "../../youtube/player/player.component";
 import { TooltabComponent } from "../../common/tooltab/tooltab.component";
 import { VisualisationComponent } from "../../visualisation/visualisation.component";
 import { PlayerService } from "../../service/player/player.service";
-import { PlayerServiceStub } from "../../service/player/player.service.stub";
 import { YoutubeService } from "../../service/youtube/youtube.service";
 import { YoutubeServiceStub } from "../../service/youtube/youtube.service.stub";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -14,22 +13,38 @@ import { MaterialModule } from '../../material.module';
 import { HistoryComponent } from '../../common/history/history.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
+class PlayerServiceStub {
+  constructor() {
+    this.currentVideo = {id: 123};
+  }
+  currentVideo;
+  getPlayer() {}
+  play() {}
+}
+
 describe('WatchComponent', () => {
   let component: WatchComponent;
   let fixture: ComponentFixture<WatchComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [WatchComponent,
+      declarations: [
+        WatchComponent,
         PlayerComponent,
         TooltabComponent,
         VisualisationComponent,
         PlayerControlsComponent,
         HistoryComponent
       ],
-      imports: [BrowserAnimationsModule, MaterialModule, RouterTestingModule],
-       providers: [{ provide: YoutubeService, useClass: YoutubeServiceStub },
-          { provide: PlayerService, useClass: PlayerServiceStub }]
+      imports: [
+        //BrowserAnimationsModule,
+        MaterialModule,
+        RouterTestingModule
+      ],
+      providers: [
+        //{ provide: YoutubeService, useClass: YoutubeServiceStub },
+        { provide: PlayerService, useClass: PlayerServiceStub }
+      ]
     })
       .compileComponents();
   }));

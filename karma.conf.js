@@ -12,7 +12,7 @@ module.exports = function (config) {
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
       require('karma-remap-coverage'),
-      require('karma-sourcemap-loader'),
+      //require('karma-sourcemap-loader'),
       require('karma-webpack'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular/cli/plugins/karma')
