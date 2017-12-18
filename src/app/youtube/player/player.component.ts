@@ -26,8 +26,10 @@ export class PlayerComponent implements OnInit {
       .filter(e => e instanceof NavigationEnd)
       .subscribe((e: NavigationEnd) => {
         const urlParams = e.urlAfterRedirects.split('/');
-        const videoId = urlParams[urlParams.length-1];
-        this.playerSrv.play(videoId);
+        if(urlParams[1]=='watch'){
+          const videoId = urlParams[urlParams.length-1];
+          this.playerSrv.play(videoId);
+        }
       });
   }
 

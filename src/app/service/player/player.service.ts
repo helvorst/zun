@@ -37,6 +37,7 @@ export class PlayerService {
   }
 
   setChannel(channel): Subject<boolean> {
+    this.history = [];
     const ready = new Subject<boolean>();
     if (!this.currentChannel || this.currentChannel.id != channel.id) {
       this.currentChannelPlaylists = [];
@@ -60,6 +61,7 @@ export class PlayerService {
   }
 
   setPlaylist(playlist): Subject<boolean> {
+    this.history = [];
     const ready = new Subject<boolean>();
     if (!this.currentPlaylistItems.length || this.currentPlaylist.id != playlist.id) {
       this.currentPlaylist = playlist;
@@ -108,13 +110,13 @@ export class PlayerService {
     const foundVideos = this.currentPlaylistItems.filter(video => video.id === videoId);
     this.currentVideo = foundVideos[0];
     this.currentVideoIndex = this.getVideoIndex(this.currentVideo);
-    this.currentVideoObservable.next(this.currentVideo);
     if (this.player) {
       this.player.load(videoId);
       if (!this.history[this.history.length - 1] || this.history[this.history.length - 1].what != this.currentVideo) {
         this.history.push({ what: this.currentVideo, when: new Date });
       }
     }
+    this.currentVideoObservable.next(this.currentVideo);
   }
 
   switchTo(step?: number): void {
